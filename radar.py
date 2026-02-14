@@ -349,9 +349,22 @@ def main():
     scored["items"] = dedupe_scored_items(scored.get("items", []))
     scored["items"] = scored.get("items", [])[:TOP_N]
 
+    import tempfile
+
     out_json = os.path.join(OUT_DIR, f"radar_{date}.json")
-    with open(out_json, "w", encoding="utf-8") as f:
-        json.dump(scored, f, ensure_ascii=False, indent=2)
+    tmp_fd, tmp_path = tempfile.mkstemp(prefix=f"radar_{date}.", suffix=".json.tmp", dir=OUT_DIR)
+    try:
+        with os.fdopen(tmp_fd, "w", encoding="utf-8") as f:
+            json.dump(scored, f, ensure_ascii=False, indent=2)
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(tmp_path, out_json)  # atomic
+    finally:
+        try:
+            if os.path.exists(tmp_path):
+                os.remove(tmp_path)
+        except Exception:
+            pass
 
     out_md = os.path.join(OUT_DIR, f"radar_{date}.md")
     with open(out_md, "w", encoding="utf-8") as f:
@@ -362,9 +375,15 @@ def main():
             f.write(f"- Category: {it['category']}\n")
             f.write(f"- Source: {it['source'].get('name')} | {it['source'].get('url')}\n")
             f.write(f"- Link: {it.get('item_url','')}\n")
-            f.write(f"- What: {it['what_it_is']}\n")
-            f.write(f"- Why: {it['why_it_matters']}\n")
+            what = it.get("what_it_is", "")
+            why = it.get("why_it_matters", "")
+            if not why:
+             it["notes"] = (it.get("notes","") + " | missing_field=why_it_matters").strip(" |")
+
+            f.write(f"- What: {what}\n")
+            f.write(f"- Why: {why}\n")
             f.write(f"- Tags: {', '.join(it.get('tags', []))}\n")
+
             if it.get("notes"):
                 f.write(f"- Notes: {it['notes']}\n")
             f.write("\n")

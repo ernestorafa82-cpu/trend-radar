@@ -9,10 +9,9 @@ cd "$(dirname "$0")"
 . .venv/bin/activate
 python radar.py
 
-# deja un puntero al último md
-latest_json="$(ls -1 out/radar_[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].json | sort -r | head -n 1)"
-latest_md="$(ls -1 out/radar_[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].md | sort -r | head -n 1)"
-ln -sf "$(basename "$latest_json")" out/latest.json
-ln -sf "$(basename "$latest_md")" out/latest.md
+# IMPORTANTE:
+# No crear symlinks out/latest.* aquí.
+# radar.py ya escribe out/latest.json y out/latest.md como COPIA estable.
+# Si aquí se crean symlinks, radar.py puede truncar el JSON al copiar.
 
-echo "OK daily: $(date) -> $latest_md"
+echo "OK daily: $(date) -> out/latest.md"

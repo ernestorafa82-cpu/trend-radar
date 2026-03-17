@@ -273,7 +273,13 @@ def score_with_gpt(raw_items):
         "Debes seleccionar items SOLO desde INPUT usando su campo 'id'. "
         "NO inventes: si un item no existe en INPUT, no lo uses. "
         "Si no puedes inferir algo sin inventar, baja score y pon notes='uncertain'. "
-        "Objetivo: separar señal de ruido y recomendar acción."
+        "Objetivo: separar señal de ruido y recomendar acción. "
+        "Idioma de salida: escribe en español neutro todos los campos generados por ti. "
+        "Mantén el campo 'title' exactamente como venga en INPUT, sin traducirlo ni reescribirlo. "
+        "Escribe en español: 'what_it_is', 'why_it_matters', 'tags' y 'notes'. "
+        "Mantén las enums y valores del contrato exactamente como están. "
+        "Usa español correcto con tildes, eñes y caracteres Unicode reales. "
+        "No sustituyas caracteres acentuados por ASCII ni por transliteraciones defectuosas como mFs, gesti3n o autonomDa."
     )
 
     contract = """{
@@ -373,7 +379,7 @@ def main():
             f.write(f"## {idx}. {it['title']}\n")
             f.write(f"- Score: **{it['score_total']}** | Action: **{it['recommended_action']}** | Hype: **{it['hype_risk']}**\n")
             f.write(f"- Category: {it['category']}\n")
-            f.write(f"- Source: {it['source'].get('name')} | {it['source'].get('url')}\n")
+            f.write(f"- Source: {it['source'].get('name')}\n")
             f.write(f"- Link: {it.get('item_url','')}\n")
             what = it.get("what_it_is", "")
             why = it.get("why_it_matters", "")
@@ -384,8 +390,9 @@ def main():
             f.write(f"- Why: {why}\n")
             f.write(f"- Tags: {', '.join(it.get('tags', []))}\n")
 
-            if it.get("notes"):
-                f.write(f"- Notes: {it['notes']}\n")
+            notes = (it.get("notes") or "").strip()
+            if notes and notes.lower() != "uncertain":
+                f.write(f"- Notes: {notes}\n")
             f.write("\n")
 
     print(f"OK: {out_json}")

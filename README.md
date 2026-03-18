@@ -1,5 +1,10 @@
 # Market Wow Radar
 
+**Asset script-first de market intelligence diaria** que convierte ruido informativo en un **brief Top 10 accionable**, listo para operar, demostrar y transferir.
+
+**Ideal para:** founders, scouts, equipos de innovación y analistas.  
+**No es:** una plataforma SaaS completa ni un lector genérico de RSS.
+
 Market Wow Radar es un activo de inteligencia de mercado que convierte ruido informativo en un **brief diario accionable de alto valor**.
 
 Está pensado para founders, scouts, equipos de innovación y analistas que necesitan detectar antes:

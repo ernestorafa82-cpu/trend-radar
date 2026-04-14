@@ -354,6 +354,8 @@ def main():
     scored["items"] = sorted(scored.get("items", []), key=lambda x: x.get("score_total", 0), reverse=True)
     scored["items"] = dedupe_scored_items(scored.get("items", []))
     scored["items"] = scored.get("items", [])[:TOP_N]
+    for idx, it in enumerate(scored["items"], 1):
+        it["rank"] = idx
 
     import tempfile
 

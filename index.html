@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Market Wow Radar</title>
+  <meta
+    name="description"
+    content="Activo digital funcional y transferible que convierte ruido de mercado en oportunidades accionables con salida diaria clara y reutilizable."
+  />
+  <style>
+    :root {
+      --bg: #08101f;
+      --bg-2: #0d1730;
+      --panel: rgba(14, 23, 43, 0.84);
+      --panel-strong: rgba(16, 26, 50, 0.94);
+      --panel-soft: rgba(255, 255, 255, 0.03);
+      --text: #edf2fb;
+      --muted: #aeb9cf;
+      --line: #223556;
+      --accent: #79adff;
+      --accent-2: #90f2cd;
+      --accent-3: #ffd76d;
+      --ok: #9af4d2;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+      --radius: 20px;
+      --radius-sm: 14px;
+      --max: 1160px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(121, 173, 255, 0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(144, 242, 205, 0.11), transparent 24%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+      line-height: 1.58;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      padding: 24px 0 10px;
+    }
+
+    .brand-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 22px;
+      background: rgba(10, 17, 32, 0.66);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 18px;
+      backdrop-filter: blur(8px);
+    }
+
+    .brand-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .brand-logo {
+      height: 84px;
+      width: auto;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .brand-copy {
+      min-width: 0;
+    }
+
+    .brand-name {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-tagline {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .brand-link {
+      color: var(--accent-2);
+      font-weight: 800;
+      white-space: nowrap;
+      font-size: 0.96rem;
+    }
+
+    .hero {
+      padding: 20px 0 18px;
+    }
+
+    .hero-card {
+      display: grid;
+      grid-template-columns: 1.18fr 0.82fr;
+      gap: 22px;
+      padding: 36px;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background:
+        linear-gradient(180deg, rgba(16, 25, 48, 0.94), rgba(11, 19, 37, 0.96));
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin: 0 0 14px;
+      color: var(--accent-2);
+      font-size: 0.92rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0 0 14px;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+    }
+
+    h1 {
+      max-width: 10.8ch;
+      font-size: clamp(2.6rem, 5vw, 5rem);
+    }
+
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    h3 {
+      font-size: 1.04rem;
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 1.04rem;
+    }
+
+    .hero-lead {
+      max-width: 58ch;
+      font-size: 1.16rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 13px;
+      border: 1px solid transparent;
+      font-weight: 800;
+      transition: transform 0.15s ease, opacity 0.15s ease, border-color 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.98;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #07111f;
+    }
+
+    .btn-secondary {
+      border-color: var(--line);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+    }
+
+    .hero-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .metric-pill {
+      padding: 9px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .hero-side {
+      display: grid;
+      align-content: stretch;
+    }
+
+    .preview-card {
+      height: 100%;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(10, 16, 31, 0.98), rgba(8, 13, 25, 0.98));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    }
+
+    .preview-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 800;
+    }
+
+    .preview-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--ok);
+      box-shadow: 0 0 14px rgba(154, 244, 210, 0.45);
+    }
+
+    .preview-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .preview-row {
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.028);
+    }
+
+    .preview-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 7px;
+      color: var(--accent-2);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .preview-title {
+      margin: 0 0 6px;
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .preview-copy {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .preview-footer {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .section {
+      padding: 10px 0;
+    }
+
+    .section-title {
+      margin-bottom: 18px;
+    }
+
+    .section-title p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .grid-3,
+    .grid-2 {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    .card p:last-child,
+    .card ul:last-child {
+      margin-bottom: 0;
+    }
+
+    .card-emphasis {
+      background: var(--panel-strong);
+      box-shadow: var(--shadow);
+    }
+
+    .list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .list li + li {
+      margin-top: 8px;
+    }
+
+    .buyer-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .buyer-tag {
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      color: var(--text);
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .sale-box {
+      text-align: center;
+      padding: 34px 26px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(18, 29, 54, 0.96), rgba(13, 22, 42, 0.96));
+      box-shadow: var(--shadow);
+    }
+
+    .sale-box p {
+      max-width: 830px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .sale-notes {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .sale-note {
+      color: var(--accent-2);
+      font-weight: 800;
+      font-size: 1rem;
+    }
+
+    .site-footer {
+      padding: 24px 0 44px;
+    }
+
+    .footer-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero-card,
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(var(--max), calc(100% - 22px));
+      }
+
+      .brand-bar,
+      .brand-left,
+      .footer-line {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .brand-logo {
+        height: 72px;
+      }
+
+      .hero-card,
+      .card,
+      .sale-box {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="container">
+      <div class="brand-bar">
+        <div class="brand-left">
+          <img
+            src="Marketlogo.png"
+            alt="Market Wow Radar logo"
+            class="brand-logo"
+          />
+          <div class="brand-copy">
+            <p class="brand-name">Market Wow Radar</p>
+            <p class="brand-tagline">Radar diario de señales con valor comercial real</p>
+          </div>
+        </div>
+        <a href="#adquisicion" class="brand-link">Adquisición o licencia</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-card">
+          <div>
+            <p class="eyebrow">Trend-Radar / Market Wow Radar</p>
+            <h1>Detecta antes lo que otros verán tarde.</h1>
+            <p class="hero-lead">
+              Activo digital funcional y transferible que convierte ruido de mercado
+              en oportunidades accionables, con salida diaria clara y reutilizable.
+            </p>
+
+            <div class="hero-actions">
+              <a href="#incluye" class="btn btn-primary">Ver qué incluye la venta</a>
+              <a href="#adquisicion" class="btn btn-secondary">Adquisición o licencia</a>
+            </div>
+
+            <div class="hero-metrics">
+              <span class="metric-pill">Multifuente</span>
+              <span class="metric-pill">Signal Gate</span>
+              <span class="metric-pill">Top 10 accionable</span>
+              <span class="metric-pill">Salida en Markdown + JSON</span>
+            </div>
+          </div>
+
+          <div class="hero-side">
+            <div class="preview-card">
+              <div class="preview-top">
+                <span class="preview-dot"></span>
+                <span>Preview · salida diaria</span>
+              </div>
+
+              <div class="preview-list">
+                <div class="preview-row">
+                  <div class="preview-meta">
+                    <span>ACT</span>
+                    <span>Score 39</span>
+                  </div>
+                  <p class="preview-title">Señal prioritaria de AI aplicada</p>
+                  <p class="preview-copy">
+                    Oportunidad detectada, priorizada y presentada con lectura rápida
+                    y valor comercial inmediato.
+                  </p>
+                </div>
+
+                <div class="preview-row">
+                  <div class="preview-meta">
+                    <span>WATCH</span>
+                    <span>Score 34</span>
+                  </div>
+                  <p class="preview-title">Cambio operativo en fintech</p>
+                  <p class="preview-copy">
+                    Movimiento relevante monitorizado para seguimiento posterior, sin
+                    ruido accesorio.
+                  </p>
+                </div>
+
+                <div class="preview-row">
+                  <div class="preview-meta">
+                    <span>EXPLORE</span>
+                    <span>Score 31</span>
+                  </div>
+                  <p class="preview-title">Tendencia temprana en health tech</p>
+                  <p class="preview-copy">
+                    Señal emergente preparada para exploración, con salida reutilizable
+                    y fácil de reempaquetar.
+                  </p>
+                </div>
+              </div>
+
+              <div class="preview-footer">
+                Radar diario multifuente · priorización accionable · activo listo para operar o transferir
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="valor">
+      <div class="container">
+        <div class="grid-3">
+          <article class="card">
+            <h2>Qué hace hoy</h2>
+            <p>
+              Recopila señales desde múltiples fuentes, reduce ruido, prioriza
+              oportunidades y genera un radar diario reutilizable en Markdown y JSON.
+            </p>
+          </article>
+
+          <article class="card">
+            <h2>Por qué tiene valor</h2>
+            <p>
+              Ayuda a detectar antes tendencias relevantes, ahorra tiempo de barrido
+              manual y evita construir desde cero una base útil de market intelligence
+              diaria.
+            </p>
+          </article>
+
+          <article class="card">
+            <h2>Por qué es vendible</h2>
+            <p>
+              Es entendible, operativo, transferible y ya parte de una base funcional
+              en lugar de una idea en bruto que requiera meses de arranque.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="incluye">
+      <div class="container">
+        <div class="grid-2">
+          <article class="card card-emphasis">
+            <h2>Qué incluye la entrega</h2>
+            <ul class="list">
+              <li>Repositorio del proyecto listo para transferencia.</li>
+              <li>Scripts de setup y ejecución.</li>
+              <li>Landing mínima comercial ya desplegable.</li>
+              <li>Demo funcional con salida diaria.</li>
+              <li>Documentación operativa y handoff corto.</li>
+              <li>Base reutilizable para operar, adaptar o reempaquetar.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h2>Para quién encaja mejor</h2>
+            <p>
+              Especialmente atractivo para operadores de media, builders de microproductos,
+              analistas, buyers de activos digitales y equipos que quieren una base
+              accionable sin arrancar desde cero.
+            </p>
+            <div class="buyer-tags">
+              <span class="buyer-tag">Analistas</span>
+              <span class="buyer-tag">Builders</span>
+              <span class="buyer-tag">Media operators</span>
+              <span class="buyer-tag">Buyers de activos</span>
+              <span class="buyer-tag">Research teams</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="adquisicion">
+      <div class="container">
+        <div class="sale-box">
+          <h2>Adquisición o licencia</h2>
+          <p>
+            Market Wow Radar está disponible para licencia comercial privada o adquisición
+            del activo bajo acuerdo específico, orientado a compradores que quieran
+            una base funcional y transferible de radar diario, con capacidad de
+            operación inmediata y espacio claro para reempaquetado comercial.
+          </p>
+          <div class="sale-notes">
+            <div class="sale-note">Dominio incluido en la operación: marketwowradar.com</div>
+            <div class="sale-note">Contacto inicial por el canal del listing o marketplace donde se ofrezca el activo</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-line">
+        <span>Market Wow Radar</span>
+        <span>Activo digital funcional y transferible</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

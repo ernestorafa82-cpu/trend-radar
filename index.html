@@ -1,31 +1,97 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Market Wow Radar</title>
+  <title>Checkout Shield + Merchant Sentinel | 24/7 Shopify Operations Platforms</title>
   <meta
     name="description"
-    content="Activo digital funcional y transferible que convierte ruido de mercado en oportunidades accionables con salida diaria clara y reutilizable."
+    content="Two independent Shopify operations platforms with 24/7 worker agents: Merchant Sentinel watches live stores, while Checkout Shield governs critical releases with evidence, human approval and revenue protection."
   />
+  <meta
+    name="keywords"
+    content="Shopify operations platform, Shopify agency software, Shopify release assurance, Shopify revenue protection, checkout release assurance, Shopify monitoring, Shopify incident operations, Operator Zero, Merchant Sentinel, Checkout Shield"
+  />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Checkout Shield and Merchant Sentinel" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Checkout Shield + Merchant Sentinel | 24/7 Shopify Operations Platforms" />
+  <meta
+    property="og:description"
+    content="Two independent platforms with their own 24/7 worker agents for Shopify agencies: live-store vigilance, release control, evidence, revenue protection and human-approved sensitive actions."
+  />
+  <meta property="og:site_name" content="Checkout Shield + Merchant Sentinel" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="24/7 Shopify Operations Platforms with Worker Agents" />
+  <meta
+    name="twitter:description"
+    content="Merchant Sentinel watches the store. Checkout Shield governs the change. Together they give Shopify agencies an integrated operational layer."
+  />
+  <link rel="canonical" href="https://marketwowradar.com/" />
+  <link rel="alternate" hreflang="en" href="https://marketwowradar.com/#english" />
+  <link rel="alternate" hreflang="es" href="https://marketwowradar.com/#espanol" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Checkout Shield + Merchant Sentinel",
+      "url": "https://marketwowradar.com/",
+      "description": "Two independent Shopify operations platforms with 24/7 worker agents for revenue protection, release assurance, incident operations and evidence-led decisioning.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+34-611-716-865",
+        "contactType": "sales",
+        "availableLanguage": ["English", "Spanish"]
+      },
+      "makesOffer": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "SoftwareApplication",
+            "name": "Checkout Shield",
+            "applicationCategory": "BusinessApplication",
+            "description": "Shopify release assurance platform with Operator Zero, evidence packs, release rooms, human approval and revenue-protection guardrails."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "SoftwareApplication",
+            "name": "Merchant Sentinel",
+            "applicationCategory": "BusinessApplication",
+            "description": "Shopify revenue protection and incident operations platform with a 24/7 worker agent for live-store vigilance and operational response."
+          }
+        }
+      ]
+    }
+  </script>
   <style>
     :root {
-      --bg: #08101f;
-      --bg-2: #0d1730;
-      --panel: rgba(14, 23, 43, 0.84);
-      --panel-strong: rgba(16, 26, 50, 0.94);
-      --panel-soft: rgba(255, 255, 255, 0.03);
-      --text: #edf2fb;
-      --muted: #aeb9cf;
-      --line: #223556;
-      --accent: #79adff;
-      --accent-2: #90f2cd;
-      --accent-3: #ffd76d;
-      --ok: #9af4d2;
-      --shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
-      --radius: 20px;
-      --radius-sm: 14px;
-      --max: 1160px;
+      --ink: #07111f;
+      --ink-2: #0f172a;
+      --navy: #111827;
+      --blue-950: #172554;
+      --indigo-900: #312e81;
+      --slate: #475569;
+      --muted: #64748b;
+      --soft: #f8fafc;
+      --soft-2: #eef2ff;
+      --surface: rgba(255, 255, 255, 0.9);
+      --line: rgba(148, 163, 184, 0.28);
+      --line-strong: rgba(203, 213, 225, 0.9);
+      --brand: #2563eb;
+      --brand-2: #4f46e5;
+      --cyan: #67e8f9;
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --white: #ffffff;
+      --shadow: 0 24px 70px rgba(15, 23, 42, 0.12);
+      --shadow-dark: 0 30px 90px rgba(15, 23, 42, 0.28);
+      --radius: 26px;
+      --radius-lg: 34px;
+      --pill: 999px;
+      --max: 1180px;
     }
 
     * {
@@ -38,13 +104,14 @@
 
     body {
       margin: 0;
-      color: var(--text);
+      color: var(--ink-2);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(121, 173, 255, 0.18), transparent 28%),
-        radial-gradient(circle at top right, rgba(144, 242, 205, 0.11), transparent 24%),
-        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
-      line-height: 1.58;
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.16), transparent 30%),
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.12), transparent 24%),
+        linear-gradient(180deg, #f8fafc 0%, #eef2ff 42%, #ffffff 100%);
+      line-height: 1.6;
+      overflow-x: hidden;
     }
 
     a {
@@ -52,145 +119,211 @@
       text-decoration: none;
     }
 
-    img {
-      max-width: 100%;
-      display: block;
-    }
-
     .container {
-      width: min(var(--max), calc(100% - 32px));
+      width: min(var(--max), calc(100% - 36px));
       margin: 0 auto;
     }
 
-    .site-header {
-      padding: 24px 0 10px;
+    .page-glow {
+      position: fixed;
+      inset: auto -18% 10% auto;
+      width: 460px;
+      height: 460px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(79, 70, 229, 0.16), transparent 68%);
+      pointer-events: none;
+      z-index: -1;
     }
 
-    .brand-bar {
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: 18px 0 10px;
+      backdrop-filter: blur(14px);
+    }
+
+    .nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      padding: 16px 22px;
-      background: rgba(10, 17, 32, 0.66);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 18px;
-      backdrop-filter: blur(8px);
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: 0 16px 45px rgba(15, 23, 42, 0.08);
     }
 
-    .brand-left {
+    .brand {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 12px;
       min-width: 0;
     }
 
-    .brand-logo {
-      height: 84px;
-      width: auto;
-      object-fit: contain;
-      flex-shrink: 0;
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      background:
+        linear-gradient(135deg, #0f172a 0%, #172554 52%, #4f46e5 100%);
+      color: #ffffff;
+      display: grid;
+      place-items: center;
+      font-weight: 950;
+      letter-spacing: -0.05em;
+      box-shadow: 0 18px 38px rgba(37, 99, 235, 0.25);
     }
 
-    .brand-copy {
-      min-width: 0;
-    }
-
-    .brand-name {
+    .brand-title {
       margin: 0;
-      font-size: 1.05rem;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-    }
-
-    .brand-tagline {
-      margin: 6px 0 0;
-      color: var(--muted);
-      font-size: 0.98rem;
-    }
-
-    .brand-link {
-      color: var(--accent-2);
-      font-weight: 800;
-      white-space: nowrap;
       font-size: 0.96rem;
+      font-weight: 950;
+      letter-spacing: -0.02em;
+      color: var(--ink-2);
+    }
+
+    .brand-subtitle {
+      margin: 1px 0 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      color: #334155;
+      font-size: 0.88rem;
+      font-weight: 850;
+      padding: 9px 11px;
+      border-radius: var(--pill);
+    }
+
+    .nav-links a:hover {
+      background: #eef2ff;
+      color: #3730a3;
+    }
+
+    .nav-cta {
+      background: var(--ink-2) !important;
+      color: #ffffff !important;
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.16);
     }
 
     .hero {
-      padding: 20px 0 18px;
+      padding: 26px 0 24px;
     }
 
-    .hero-card {
+    .hero-panel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 38px;
+      padding: 34px;
+      background: linear-gradient(135deg, #0f172a 0%, #172554 50%, #312e81 100%);
+      color: #ffffff;
+      box-shadow: var(--shadow-dark);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .hero-panel::before {
+      content: "";
+      position: absolute;
+      inset: -40% -25% auto auto;
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, rgba(103, 232, 249, 0.22), transparent 66%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
       display: grid;
-      grid-template-columns: 1.18fr 0.82fr;
-      gap: 22px;
-      padding: 36px;
-      border: 1px solid var(--line);
-      border-radius: 26px;
-      background:
-        linear-gradient(180deg, rgba(16, 25, 48, 0.94), rgba(11, 19, 37, 0.96));
-      box-shadow: var(--shadow);
+      grid-template-columns: minmax(0, 1.08fr) minmax(330px, 0.92fr);
+      gap: 30px;
+      align-items: stretch;
     }
 
     .eyebrow {
-      display: inline-block;
-      margin: 0 0 14px;
-      color: var(--accent-2);
-      font-size: 0.92rem;
-      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 18px;
+      padding: 8px 12px;
+      border-radius: var(--pill);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.06);
+      color: #dbeafe;
+      font-size: 0.78rem;
+      font-weight: 950;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+    }
+
+    .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #67e8f9;
+      box-shadow: 0 0 22px rgba(103, 232, 249, 0.9);
     }
 
     h1,
     h2,
     h3 {
-      margin: 0 0 14px;
-      line-height: 1.08;
-      letter-spacing: -0.025em;
+      margin: 0;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
     }
 
     h1 {
-      max-width: 10.8ch;
-      font-size: clamp(2.6rem, 5vw, 5rem);
+      max-width: 880px;
+      font-size: clamp(2.8rem, 6.4vw, 6.6rem);
     }
 
-    h2 {
-      font-size: 1.5rem;
-    }
-
-    h3 {
-      font-size: 1.04rem;
-    }
-
-    p {
-      margin: 0 0 14px;
-      color: var(--muted);
-      font-size: 1.04rem;
+    .gradient-text {
+      background: linear-gradient(90deg, #ffffff 0%, #dbeafe 46%, #fed7aa 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     .hero-lead {
-      max-width: 58ch;
-      font-size: 1.16rem;
+      max-width: 760px;
+      margin: 22px 0 0;
+      color: #dbeafe;
+      font-size: clamp(1.08rem, 1.5vw, 1.26rem);
+      line-height: 1.75;
+    }
+
+    .hero-lead strong {
+      color: #ffffff;
     }
 
     .hero-actions {
       display: flex;
-      flex-wrap: wrap;
       gap: 12px;
-      margin-top: 22px;
+      flex-wrap: wrap;
+      margin-top: 26px;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 48px;
+      min-height: 50px;
       padding: 0 18px;
-      border-radius: 13px;
-      border: 1px solid transparent;
-      font-weight: 800;
-      transition: transform 0.15s ease, opacity 0.15s ease, border-color 0.15s ease;
+      border-radius: 15px;
+      font-size: 0.94rem;
+      font-weight: 950;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, opacity 0.16s ease;
     }
 
     .btn:hover {
@@ -199,437 +332,1029 @@
     }
 
     .btn-primary {
-      background: var(--accent);
-      color: #07111f;
+      background: #ffffff;
+      color: #0f172a;
+      box-shadow: 0 16px 32px rgba(255, 255, 255, 0.12);
     }
 
     .btn-secondary {
-      border-color: var(--line);
-      background: rgba(255, 255, 255, 0.03);
-      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.07);
+      color: #ffffff;
     }
 
-    .hero-metrics {
+    .trust-row {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 18px;
+      margin-top: 24px;
     }
 
-    .metric-pill {
+    .trust-pill {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.06);
+      color: #cbd5e1;
+      border-radius: var(--pill);
       padding: 9px 12px;
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.03);
-      color: var(--muted);
-      font-size: 0.92rem;
-      font-weight: 700;
+      font-size: 0.82rem;
+      font-weight: 850;
     }
 
-    .hero-side {
+    .command-center {
       display: grid;
-      align-content: stretch;
-    }
-
-    .preview-card {
+      gap: 14px;
       height: 100%;
-      padding: 18px;
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      background: linear-gradient(180deg, rgba(10, 16, 31, 0.98), rgba(8, 13, 25, 0.98));
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+      min-height: 520px;
+      padding: 16px;
+      border-radius: 26px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(15, 23, 42, 0.78);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(14px);
     }
 
-    .preview-top {
+    .mock-header {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 16px;
-      color: var(--muted);
-      font-size: 0.92rem;
-      font-weight: 800;
-    }
-
-    .preview-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: var(--ok);
-      box-shadow: 0 0 14px rgba(154, 244, 210, 0.45);
-    }
-
-    .preview-list {
-      display: grid;
+      justify-content: space-between;
       gap: 12px;
+      padding: 4px 2px 2px;
+      color: #cbd5e1;
+      font-size: 0.82rem;
+      font-weight: 900;
     }
 
-    .preview-row {
+    .window-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .window-dots span {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .agent-strip {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .agent-card,
+    .signal-card,
+    .decision-card {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
       padding: 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      background: rgba(255, 255, 255, 0.028);
+      background: rgba(255, 255, 255, 0.055);
     }
 
-    .preview-meta {
+    .agent-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      color: #e0f2fe;
+      font-size: 0.76rem;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 16px rgba(34, 197, 94, 0.65);
+    }
+
+    .agent-title {
+      margin: 10px 0 6px;
+      color: #ffffff;
+      font-size: 1.02rem;
+      font-weight: 950;
+      line-height: 1.2;
+    }
+
+    .agent-copy {
+      margin: 0;
+      color: #cbd5e1;
+      font-size: 0.86rem;
+      line-height: 1.55;
+    }
+
+    .signal-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .signal-card {
+      display: grid;
+      gap: 8px;
+    }
+
+    .signal-top {
       display: flex;
       justify-content: space-between;
       gap: 12px;
-      margin-bottom: 7px;
-      color: var(--accent-2);
-      font-size: 0.78rem;
-      font-weight: 800;
+      color: #93c5fd;
+      font-size: 0.74rem;
+      font-weight: 950;
       letter-spacing: 0.06em;
       text-transform: uppercase;
     }
 
-    .preview-title {
-      margin: 0 0 6px;
-      color: var(--text);
-      font-size: 1rem;
-      font-weight: 800;
+    .signal-card strong {
+      color: #ffffff;
+      font-size: 0.94rem;
     }
 
-    .preview-copy {
+    .signal-card p {
       margin: 0;
-      color: var(--muted);
-      font-size: 0.95rem;
+      color: #cbd5e1;
+      font-size: 0.84rem;
+      line-height: 1.5;
     }
 
-    .preview-footer {
-      margin-top: 14px;
-      padding-top: 12px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      color: var(--muted);
-      font-size: 0.9rem;
+    .decision-card {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.22), rgba(245, 158, 11, 0.14));
+    }
+
+    .decision-card h3 {
+      color: #ffffff;
+      font-size: 1.08rem;
+    }
+
+    .decision-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .decision-pill {
+      border-radius: 14px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .decision-pill span {
+      display: block;
+      color: #cbd5e1;
+      font-size: 0.68rem;
+      font-weight: 950;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .decision-pill strong {
+      display: block;
+      margin-top: 5px;
+      color: #ffffff;
+      font-size: 0.82rem;
+      line-height: 1.2;
     }
 
     .section {
-      padding: 10px 0;
+      padding: 44px 0;
     }
 
-    .section-title {
-      margin-bottom: 18px;
+    .section-heading {
+      display: grid;
+      gap: 14px;
+      max-width: 860px;
+      margin-bottom: 22px;
     }
 
-    .section-title p {
+    .section-kicker {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 8px;
+      color: #3730a3;
+      background: #eef2ff;
+      border: 1px solid #c7d2fe;
+      border-radius: var(--pill);
+      padding: 8px 11px;
+      font-size: 0.75rem;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .section-heading h2 {
+      color: var(--ink-2);
+      font-size: clamp(2rem, 3.2vw, 3.8rem);
+    }
+
+    .section-heading p {
       margin: 0;
-      color: var(--muted);
-      font-size: 1rem;
+      color: var(--slate);
+      font-size: 1.08rem;
+      line-height: 1.75;
     }
 
+    .grid-2,
     .grid-3,
-    .grid-2 {
+    .grid-4 {
       display: grid;
       gap: 18px;
-    }
-
-    .grid-3 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .grid-2 {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
     .card {
+      position: relative;
+      overflow: hidden;
       padding: 24px;
-      border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: var(--panel);
-    }
-
-    .card p:last-child,
-    .card ul:last-child {
-      margin-bottom: 0;
-    }
-
-    .card-emphasis {
-      background: var(--panel-strong);
-      box-shadow: var(--shadow);
-    }
-
-    .list {
-      margin: 0;
-      padding-left: 18px;
-      color: var(--muted);
-    }
-
-    .list li + li {
-      margin-top: 8px;
-    }
-
-    .buyer-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .buyer-tag {
-      padding: 10px 12px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      color: var(--text);
-      font-size: 0.92rem;
-      font-weight: 700;
-    }
-
-    .sale-box {
-      text-align: center;
-      padding: 34px 26px;
       border: 1px solid var(--line);
-      border-radius: 24px;
-      background: linear-gradient(180deg, rgba(18, 29, 54, 0.96), rgba(13, 22, 42, 0.96));
-      box-shadow: var(--shadow);
+      background: var(--surface);
+      box-shadow: 0 18px 48px rgba(15, 23, 42, 0.07);
     }
 
-    .sale-box p {
-      max-width: 830px;
-      margin-left: auto;
-      margin-right: auto;
+    .card.dark {
+      background: linear-gradient(135deg, #111827 0%, #172554 100%);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: var(--shadow-dark);
     }
 
-    .sale-notes {
-      display: grid;
-      gap: 10px;
-      margin-top: 18px;
+    .card.dark p,
+    .card.dark li {
+      color: #cbd5e1;
     }
 
-    .sale-note {
-      color: var(--accent-2);
-      font-weight: 800;
+    .card h3 {
+      color: var(--ink-2);
+      font-size: 1.24rem;
+      margin-bottom: 10px;
+    }
+
+    .card.dark h3 {
+      color: #ffffff;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--slate);
       font-size: 1rem;
     }
 
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      border-radius: var(--pill);
+      padding: 7px 10px;
+      margin-bottom: 14px;
+      font-size: 0.74rem;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .badge.blue {
+      background: #eef2ff;
+      border: 1px solid #c7d2fe;
+      color: #3730a3;
+    }
+
+    .badge.green {
+      background: #ecfdf5;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+    }
+
+    .badge.amber {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      color: #92400e;
+    }
+
+    .badge.red {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+    }
+
+    .product-card {
+      min-height: 100%;
+      padding: 30px;
+    }
+
+    .product-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .product-name {
+      margin: 0;
+      font-size: clamp(1.8rem, 2.8vw, 3rem);
+      color: var(--ink-2);
+    }
+
+    .product-card.dark .product-name {
+      color: #ffffff;
+    }
+
+    .product-role {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: var(--pill);
+      padding: 8px 11px;
+      background: rgba(37, 99, 235, 0.08);
+      color: #1d4ed8;
+      font-size: 0.78rem;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .product-card.dark .product-role {
+      background: rgba(255, 255, 255, 0.08);
+      color: #dbeafe;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .feature-list {
+      display: grid;
+      gap: 11px;
+      margin: 22px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .feature-list li {
+      position: relative;
+      padding-left: 24px;
+      color: var(--slate);
+      font-size: 0.98rem;
+    }
+
+    .feature-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.72em;
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--brand);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+    }
+
+    .dark .feature-list li::before {
+      background: #67e8f9;
+      box-shadow: 0 0 0 4px rgba(103, 232, 249, 0.12);
+    }
+
+    .connection {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .connection-node {
+      padding: 22px;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      box-shadow: 0 14px 35px rgba(15, 23, 42, 0.06);
+    }
+
+    .connection-node h3 {
+      margin-bottom: 8px;
+      font-size: 1.12rem;
+    }
+
+    .connection-node p {
+      margin: 0;
+      color: var(--slate);
+      font-size: 0.95rem;
+    }
+
+    .connection-arrow {
+      display: grid;
+      place-items: center;
+      width: 72px;
+      height: 72px;
+      border-radius: 26px;
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      box-shadow: 0 18px 45px rgba(37, 99, 235, 0.25);
+      font-size: 1.9rem;
+      font-weight: 950;
+    }
+
+    .ops-map {
+      display: grid;
+      grid-template-columns: 0.82fr 1.18fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .ops-panel {
+      border-radius: 30px;
+      padding: 24px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .ops-panel.dark {
+      background: linear-gradient(135deg, #0f172a, #172554);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .ops-panel.dark p {
+      color: #cbd5e1;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+    }
+
+    .timeline-icon {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 13px;
+      background: #eef2ff;
+      color: #3730a3;
+      font-size: 0.8rem;
+      font-weight: 950;
+    }
+
+    .timeline-item strong {
+      display: block;
+      color: var(--ink-2);
+      font-size: 0.98rem;
+    }
+
+    .timeline-item span {
+      display: block;
+      color: var(--slate);
+      font-size: 0.9rem;
+      margin-top: 2px;
+    }
+
+    .dark .timeline-icon {
+      background: rgba(255, 255, 255, 0.1);
+      color: #e0f2fe;
+    }
+
+    .dark .timeline-item strong {
+      color: #ffffff;
+    }
+
+    .dark .timeline-item span {
+      color: #cbd5e1;
+    }
+
+    .metric-card {
+      border-radius: 22px;
+      padding: 20px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      box-shadow: 0 16px 38px rgba(15, 23, 42, 0.06);
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 950;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .metric-value {
+      margin-top: 8px;
+      color: var(--ink-2);
+      font-size: 1.36rem;
+      font-weight: 950;
+      line-height: 1.16;
+    }
+
+    .metric-detail {
+      margin-top: 8px;
+      color: var(--slate);
+      font-size: 0.9rem;
+    }
+
+    .language-block {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      align-items: start;
+    }
+
+    .quote-box {
+      padding: 28px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #111827 0%, #172554 100%);
+      color: #ffffff;
+      box-shadow: var(--shadow-dark);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .quote-box p {
+      margin: 0;
+      color: #dbeafe;
+      font-size: 1.14rem;
+      line-height: 1.75;
+    }
+
+    .quote-box strong {
+      color: #ffffff;
+    }
+
+    .cta {
+      padding: 50px 0 64px;
+    }
+
+    .cta-panel {
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      border-radius: 38px;
+      padding: 42px 28px;
+      background:
+        radial-gradient(circle at top left, rgba(103, 232, 249, 0.18), transparent 32%),
+        linear-gradient(135deg, #0f172a 0%, #172554 54%, #312e81 100%);
+      color: #ffffff;
+      box-shadow: var(--shadow-dark);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .cta-panel h2 {
+      max-width: 850px;
+      margin: 0 auto;
+      font-size: clamp(2.1rem, 4.2vw, 4.7rem);
+    }
+
+    .cta-panel p {
+      max-width: 820px;
+      margin: 20px auto 0;
+      color: #dbeafe;
+      font-size: 1.12rem;
+      line-height: 1.75;
+    }
+
+    .contact-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .phone-link {
+      background: #ffffff;
+      color: #0f172a;
+    }
+
     .site-footer {
-      padding: 24px 0 44px;
+      padding: 24px 0 42px;
+      color: var(--muted);
+      font-size: 0.92rem;
     }
 
     .footer-line {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      gap: 12px;
+      gap: 14px;
       padding-top: 18px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      color: var(--muted);
-      font-size: 0.93rem;
+      border-top: 1px solid var(--line);
     }
 
-    @media (max-width: 980px) {
-      .hero-card,
+    @media (max-width: 1020px) {
+      .hero-grid,
+      .grid-2,
       .grid-3,
-      .grid-2 {
+      .grid-4,
+      .ops-map,
+      .language-block,
+      .connection {
         grid-template-columns: 1fr;
       }
 
-      h1 {
-        max-width: 100%;
+      .connection-arrow {
+        width: 100%;
+        height: 56px;
+      }
+
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
       }
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 680px) {
       .container {
         width: min(var(--max), calc(100% - 22px));
       }
 
-      .brand-bar,
-      .brand-left,
-      .footer-line {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .brand-logo {
-        height: 72px;
-      }
-
-      .hero-card,
+      .hero-panel,
+      .product-card,
       .card,
-      .sale-box {
-        padding: 20px;
+      .ops-panel,
+      .quote-box,
+      .cta-panel {
+        padding: 22px;
+        border-radius: 26px;
+      }
+
+      .command-center {
+        min-height: auto;
+      }
+
+      .agent-strip,
+      .decision-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: clamp(2.35rem, 15vw, 4.2rem);
+      }
+
+      .footer-line,
+      .product-head {
+        flex-direction: column;
       }
     }
   </style>
 </head>
 <body>
-  <header class="site-header" id="top">
+  <div class="page-glow"></div>
+
+  <header class="site-header">
     <div class="container">
-      <div class="brand-bar">
-        <div class="brand-left">
-          <img
-            src="Marketlogo.png"
-            alt="Market Wow Radar logo"
-            class="brand-logo"
-          />
-          <div class="brand-copy">
-            <p class="brand-name">Market Wow Radar</p>
-            <p class="brand-tagline">Radar diario de señales con valor comercial real</p>
-          </div>
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="brand" href="#top" aria-label="Checkout Shield and Merchant Sentinel home">
+          <span class="brand-mark">CS</span>
+          <span>
+            <span class="brand-title">Checkout Shield + Merchant Sentinel</span>
+            <span class="brand-subtitle">Shopify operations platforms with 24/7 worker agents</span>
+          </span>
+        </a>
+        <div class="nav-links">
+          <a href="#platforms">Platforms</a>
+          <a href="#agents">Agents</a>
+          <a href="#workflow">Workflow</a>
+          <a href="#espanol">Español</a>
+          <a class="nav-cta" href="tel:+34611716865">+34 611 716 865</a>
         </div>
-        <a href="#adquisicion" class="brand-link">Adquisición o licencia</a>
-      </div>
+      </nav>
     </div>
   </header>
 
-  <main>
-    <section class="hero">
+  <main id="top">
+    <section class="hero" id="english">
       <div class="container">
-        <div class="hero-card">
-          <div>
-            <p class="eyebrow">Trend-Radar / Market Wow Radar</p>
-            <h1>Detecta antes lo que otros verán tarde.</h1>
-            <p class="hero-lead">
-              Activo digital funcional y transferible que convierte ruido de mercado
-              en oportunidades accionables, con salida diaria clara y reutilizable.
-            </p>
+        <div class="hero-panel">
+          <div class="hero-grid">
+            <div>
+              <p class="eyebrow"><span class="pulse"></span> Shopify agency operations · English / Español</p>
+              <h1><span class="gradient-text">Two platforms.</span><br />Two 24/7 worker agents.<br />One Shopify operations layer.</h1>
+              <p class="hero-lead">
+                <strong>Merchant Sentinel watches the store.</strong> <strong>Checkout Shield governs the change.</strong>
+                Together, they help Shopify agencies protect revenue, control critical releases, detect incidents, prepare evidence and keep humans in control of sensitive decisions.
+              </p>
 
-            <div class="hero-actions">
-              <a href="#incluye" class="btn btn-primary">Ver qué incluye la venta</a>
-              <a href="#adquisicion" class="btn btn-secondary">Adquisición o licencia</a>
-            </div>
-
-            <div class="hero-metrics">
-              <span class="metric-pill">Multifuente</span>
-              <span class="metric-pill">Signal Gate</span>
-              <span class="metric-pill">Top 10 accionable</span>
-              <span class="metric-pill">Salida en Markdown + JSON</span>
-            </div>
-          </div>
-
-          <div class="hero-side">
-            <div class="preview-card">
-              <div class="preview-top">
-                <span class="preview-dot"></span>
-                <span>Preview · salida diaria</span>
+              <div class="hero-actions">
+                <a href="#platforms" class="btn btn-primary">Explore the platforms</a>
+                <a href="tel:+34611716865" class="btn btn-secondary">Book a private demo</a>
               </div>
 
-              <div class="preview-list">
-                <div class="preview-row">
-                  <div class="preview-meta">
-                    <span>ACT</span>
-                    <span>Score 39</span>
-                  </div>
-                  <p class="preview-title">Señal prioritaria de AI aplicada</p>
-                  <p class="preview-copy">
-                    Oportunidad detectada, priorizada y presentada con lectura rápida
-                    y valor comercial inmediato.
-                  </p>
-                </div>
+              <div class="trust-row" aria-label="Key capabilities">
+                <span class="trust-pill">24/7 worker agents</span>
+                <span class="trust-pill">Human approval for sensitive actions</span>
+                <span class="trust-pill">Release assurance</span>
+                <span class="trust-pill">Revenue protection</span>
+                <span class="trust-pill">Evidence and audit trail</span>
+              </div>
+            </div>
 
-                <div class="preview-row">
-                  <div class="preview-meta">
-                    <span>WATCH</span>
-                    <span>Score 34</span>
-                  </div>
-                  <p class="preview-title">Cambio operativo en fintech</p>
-                  <p class="preview-copy">
-                    Movimiento relevante monitorizado para seguimiento posterior, sin
-                    ruido accesorio.
-                  </p>
-                </div>
+            <aside class="command-center" aria-label="Shopify operations command center preview">
+              <div class="mock-header">
+                <span>Agency Operations Command Center</span>
+                <span class="window-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+              </div>
 
-                <div class="preview-row">
-                  <div class="preview-meta">
-                    <span>EXPLORE</span>
-                    <span>Score 31</span>
-                  </div>
-                  <p class="preview-title">Tendencia temprana en health tech</p>
-                  <p class="preview-copy">
-                    Señal emergente preparada para exploración, con salida reutilizable
-                    y fácil de reempaquetar.
-                  </p>
+              <div class="agent-strip">
+                <div class="agent-card">
+                  <div class="agent-label"><span>Checkout Shield</span><span class="status-dot"></span></div>
+                  <p class="agent-title">Operator Zero</p>
+                  <p class="agent-copy">Reviews release risk, evidence, blockers, revenue truth and owner approval before critical Shopify changes move forward.</p>
+                </div>
+                <div class="agent-card">
+                  <div class="agent-label"><span>Merchant Sentinel</span><span class="status-dot"></span></div>
+                  <p class="agent-title">Sentinel worker agent</p>
+                  <p class="agent-copy">Watches live-store health, incidents, revenue signals and operational drift across the agency portfolio.</p>
                 </div>
               </div>
 
-              <div class="preview-footer">
-                Radar diario multifuente · priorización accionable · activo listo para operar o transferir
+              <div class="signal-list">
+                <div class="signal-card">
+                  <div class="signal-top"><span>Live Store</span><span>Watching</span></div>
+                  <strong>Payment mix anomaly detected</strong>
+                  <p>Merchant Sentinel prioritizes the incident and prepares context for the agency team.</p>
+                </div>
+                <div class="signal-card">
+                  <div class="signal-top"><span>Critical Change</span><span>Owner Review</span></div>
+                  <strong>Checkout release requires controlled validation</strong>
+                  <p>Checkout Shield routes the change through evidence, release decision and human approval.</p>
+                </div>
+                <div class="decision-card">
+                  <h3>Decision layer</h3>
+                  <div class="decision-grid">
+                    <div class="decision-pill"><span>Action</span><strong>Sign off with conditions</strong></div>
+                    <div class="decision-pill"><span>Evidence</span><strong>Ready for handoff</strong></div>
+                    <div class="decision-pill"><span>Guardrail</span><strong>No false approval</strong></div>
+                  </div>
+                </div>
               </div>
-            </div>
+            </aside>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="valor">
+    <section class="section" id="platforms">
       <div class="container">
-        <div class="grid-3">
-          <article class="card">
-            <h2>Qué hace hoy</h2>
-            <p>
-              Recopila señales desde múltiples fuentes, reduce ruido, prioriza
-              oportunidades y genera un radar diario reutilizable en Markdown y JSON.
-            </p>
-          </article>
-
-          <article class="card">
-            <h2>Por qué tiene valor</h2>
-            <p>
-              Ayuda a detectar antes tendencias relevantes, ahorra tiempo de barrido
-              manual y evita construir desde cero una base útil de market intelligence
-              diaria.
-            </p>
-          </article>
-
-          <article class="card">
-            <h2>Por qué es vendible</h2>
-            <p>
-              Es entendible, operativo, transferible y ya parte de una base funcional
-              en lugar de una idea en bruto que requiera meses de arranque.
-            </p>
-          </article>
+        <div class="section-heading">
+          <span class="section-kicker">Independent platforms</span>
+          <h2>Each platform has its own 24/7 worker agent.</h2>
+          <p>
+            These are not dashboards with AI decoration. They are two independent Shopify operations platforms designed to communicate when the agency needs a full operational loop: live-store vigilance, controlled change, evidence, approval and post-action confidence.
+          </p>
         </div>
-      </div>
-    </section>
 
-    <section class="section" id="incluye">
-      <div class="container">
         <div class="grid-2">
-          <article class="card card-emphasis">
-            <h2>Qué incluye la entrega</h2>
-            <ul class="list">
-              <li>Repositorio del proyecto listo para transferencia.</li>
-              <li>Scripts de setup y ejecución.</li>
-              <li>Landing mínima comercial ya desplegable.</li>
-              <li>Demo funcional con salida diaria.</li>
-              <li>Documentación operativa y handoff corto.</li>
-              <li>Base reutilizable para operar, adaptar o reempaquetar.</li>
+          <article class="card product-card dark">
+            <div class="product-head">
+              <div>
+                <span class="badge amber">Release assurance</span>
+                <h3 class="product-name">Checkout Shield</h3>
+              </div>
+              <span class="product-role">Agent: Operator Zero</span>
+            </div>
+            <p>
+              Checkout Shield is the control platform for critical Shopify changes. Operator Zero works 24/7 across releases, checkout risk, evidence, blockers, revenue truth and sign-off workflows.
+            </p>
+            <ul class="feature-list">
+              <li>Controls checkout, payments, shipping, discounts, tracking, pixels, thank you / order status, post-purchase and revenue truth.</li>
+              <li>Turns technical signals into operational decisions: proceed, block, monitor or sign off with conditions.</li>
+              <li>Prepares evidence packs, release assessments, audit trails, client handoff and owner-review context.</li>
+              <li>Escalates sensitive actions for human approval instead of pushing dangerous auto-approval.</li>
             </ul>
           </article>
 
-          <article class="card">
-            <h2>Para quién encaja mejor</h2>
-            <p>
-              Especialmente atractivo para operadores de media, builders de microproductos,
-              analistas, buyers de activos digitales y equipos que quieren una base
-              accionable sin arrancar desde cero.
-            </p>
-            <div class="buyer-tags">
-              <span class="buyer-tag">Analistas</span>
-              <span class="buyer-tag">Builders</span>
-              <span class="buyer-tag">Media operators</span>
-              <span class="buyer-tag">Buyers de activos</span>
-              <span class="buyer-tag">Research teams</span>
+          <article class="card product-card">
+            <div class="product-head">
+              <div>
+                <span class="badge green">Revenue protection</span>
+                <h3 class="product-name">Merchant Sentinel</h3>
+              </div>
+              <span class="product-role">Agent: Sentinel worker</span>
             </div>
+            <p>
+              Merchant Sentinel is the live-store vigilance platform for Shopify agencies. Its worker agent monitors operational signals, detects incidents, prioritizes risk and helps the agency act before revenue damage becomes visible to the client.
+            </p>
+            <ul class="feature-list">
+              <li>Watches multi-store health, checkout signals, payment degradation, revenue risk, operational drift and critical alerts.</li>
+              <li>Transforms Shopify signals into incidents, evidence, impact context and next actions.</li>
+              <li>Supports recurring agency operations, retainer value, client reporting and faster incident response.</li>
+              <li>Communicates with Checkout Shield when a detected issue needs a controlled release or sensitive action.</li>
+            </ul>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section" id="adquisicion">
+    <section class="section" id="agents">
       <div class="container">
-        <div class="sale-box">
-          <h2>Adquisición o licencia</h2>
+        <div class="section-heading">
+          <span class="section-kicker">Worker agents, not chatbots</span>
+          <h2>They work continuously. Humans approve what matters.</h2>
           <p>
-            Market Wow Radar está disponible para licencia comercial privada o adquisición
-            del activo bajo acuerdo específico, orientado a compradores que quieran
-            una base funcional y transferible de radar diario, con capacidad de
-            operación inmediata y espacio claro para reempaquetado comercial.
+            Each platform has a worker agent that lives inside the platform. It does not replace human ownership; it reduces operational load, prepares context, performs allowed tasks and escalates sensitive decisions with evidence.
           </p>
-          <div class="sale-notes">
-            <div class="sale-note">Dominio incluido en la operación: marketwowradar.com</div>
-            <div class="sale-note">Contacto inicial por el canal del listing o marketplace donde se ofrezca el activo</div>
+        </div>
+
+        <div class="grid-4">
+          <article class="metric-card">
+            <div class="metric-label">Monitor</div>
+            <div class="metric-value">24/7 store and release context</div>
+            <div class="metric-detail">Continuous awareness across live stores, releases, signals and agency portfolio health.</div>
+          </article>
+          <article class="metric-card">
+            <div class="metric-label">Decide</div>
+            <div class="metric-value">Evidence-led recommendations</div>
+            <div class="metric-detail">Clear next actions, blockers, likely causes, business exposure and owner routing.</div>
+          </article>
+          <article class="metric-card">
+            <div class="metric-label">Execute</div>
+            <div class="metric-value">Operational work, not noise</div>
+            <div class="metric-detail">Agents prepare runs, incidents, briefs, handoffs, reports and audit records.</div>
+          </article>
+          <article class="metric-card">
+            <div class="metric-label">Approve</div>
+            <div class="metric-value">Human control for sensitive tasks</div>
+            <div class="metric-detail">Production sign-off, critical changes and client-facing decisions stay under human approval.</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="workflow">
+      <div class="container">
+        <div class="section-heading">
+          <span class="section-kicker">Integrated service</span>
+          <h2>Merchant Sentinel detects. Checkout Shield controls. The agency stays ahead.</h2>
+          <p>
+            The platforms are independent, but their value compounds when their agents communicate. One watches production. The other governs critical changes. Together, they create a safer operating model for Shopify agencies managing valuable stores.
+          </p>
+        </div>
+
+        <div class="connection">
+          <div class="connection-node">
+            <span class="badge green">Live operation</span>
+            <h3>Merchant Sentinel watches the store</h3>
+            <p>Detects incidents, revenue risk, degraded signals and operational drift across live Shopify stores.</p>
+          </div>
+          <div class="connection-arrow" aria-hidden="true">↔</div>
+          <div class="connection-node">
+            <span class="badge amber">Controlled change</span>
+            <h3>Checkout Shield governs the release</h3>
+            <p>Validates critical changes with audit, replay, evidence, release decision, client handoff and human approval.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="ops-map">
+          <article class="ops-panel dark">
+            <span class="badge amber">Checkout Shield operating model</span>
+            <h2>Operator Zero is the 24/7 administrator for critical Shopify change.</h2>
+            <p>
+              It reads release state, detects blockers, prepares evidence, maintains guardrails and prevents false green decisions. It can work across the full store context, while sensitive actions require explicit human approval.
+            </p>
+            <div class="timeline">
+              <div class="timeline-item">
+                <span class="timeline-icon">1</span>
+                <div><strong>Audit the store</strong><span>Checkout, payments, shipping, discounts, pixels, tracking, post-purchase and order status.</span></div>
+              </div>
+              <div class="timeline-item">
+                <span class="timeline-icon">2</span>
+                <div><strong>Validate the change</strong><span>Baseline, replay, regression checks, revenue truth and probable root cause.</span></div>
+              </div>
+              <div class="timeline-item">
+                <span class="timeline-icon">3</span>
+                <div><strong>Prepare the decision</strong><span>Evidence pack, Release Room, Client Portal, owner review and sign-off trail.</span></div>
+              </div>
+            </div>
+          </article>
+
+          <div class="grid-2">
+            <article class="card">
+              <span class="badge blue">Release Room</span>
+              <h3>Executive release decision</h3>
+              <p>Know whether a critical Shopify change should proceed, be blocked, be monitored or be signed off with conditions.</p>
+            </article>
+            <article class="card">
+              <span class="badge green">Evidence OS</span>
+              <h3>Portable proof</h3>
+              <p>Audit reports, replay diffs, certificates, summaries, artifacts and audit trail ready for agency and merchant review.</p>
+            </article>
+            <article class="card">
+              <span class="badge amber">Human approval</span>
+              <h3>Guardrails by design</h3>
+              <p>No production sign-off, baseline promotion or sensitive rerun should happen without the right human confirmation.</p>
+            </article>
+            <article class="card">
+              <span class="badge red">False green protection</span>
+              <h3>Trust through caution</h3>
+              <p>If evidence is missing, tracking is unavailable or owner review is pending, the platform does not pretend the release is safe.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="section-kicker">Why agencies care</span>
+          <h2>A recurring operations layer, not a one-off tool.</h2>
+          <p>
+            Shopify agencies manage many stores, many changes, many stakeholders and many invisible risks. These platforms are built to become part of the agency's recurring operating rhythm: watch, detect, validate, document, approve and prove value.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="card">
+            <h3>Protect revenue before and after change</h3>
+            <p>Critical issues often appear around checkout, payments, shipping, tracking or post-purchase. The combined service is built around those revenue-sensitive surfaces.</p>
+          </article>
+          <article class="card">
+            <h3>Give clients confidence with evidence</h3>
+            <p>Move from subjective release conversations to evidence packs, audit trails, decision chains and merchant-safe handoff.</p>
+          </article>
+          <article class="card">
+            <h3>Turn agents into operational leverage</h3>
+            <p>Worker agents handle continuous review, incident context, release preparation and decision support, while humans stay in control of sensitive actions.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="espanol" lang="es">
+      <div class="container">
+        <div class="language-block">
+          <div class="section-heading">
+            <span class="section-kicker">Resumen en español</span>
+            <h2>Dos plataformas independientes. Dos agentes trabajadores 24/7. Una operación Shopify integral.</h2>
+            <p>
+              Merchant Sentinel vigila la tienda viva. Checkout Shield gobierna los cambios críticos. Cada plataforma tiene su propio agente trabajador 24/7 y ambas se comunican para dar a la agencia una capa completa de operación, evidencia, seguridad y protección de revenue.
+            </p>
+          </div>
+
+          <div class="quote-box">
+            <p>
+              <strong>No son dashboards. No son chatbots. No son herramientas puntuales.</strong><br />
+              Son plataformas operativas para agencias Shopify: una detecta riesgos e incidentes en producción; la otra controla releases, evidencia, aprobaciones y decisiones sensibles.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top: 20px;">
+          <article class="card product-card dark">
+            <span class="badge amber">Checkout Shield</span>
+            <h3>Operator Zero trabaja como administrador 24/7.</h3>
+            <p>
+              Revisa riesgos, coordina releases, valida evidencia, detecta bloqueos, prepara handoff al cliente y escala decisiones sensibles para aprobación humana. Cubre checkout, pagos, shipping, descuentos, tracking, pixels, thank you / order status, post-purchase, revenue truth y sign-off.
+            </p>
+          </article>
+          <article class="card product-card">
+            <span class="badge green">Merchant Sentinel</span>
+            <h3>Su agente vigila la operación viva de la tienda.</h3>
+            <p>
+              Monitoriza señales, incidentes, degradaciones, health operativo, riesgo de revenue y alertas multi-tienda. Ayuda a la agencia a actuar antes, priorizar mejor y demostrar valor recurrente al merchant.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <div class="container">
+        <div class="cta-panel">
+          <span class="eyebrow"><span class="pulse"></span> Private pilot / Piloto privado</span>
+          <h2>Give your Shopify agency a 24/7 operational layer before the next critical incident or release.</h2>
+          <p>
+            For agencies and high-value merchants that need more than monitoring, more than QA and more than a dashboard: live-store vigilance, controlled releases, evidence, agents and human-approved sensitive decisions.
+          </p>
+          <div class="contact-actions">
+            <a class="btn phone-link" href="tel:+34611716865">Call +34 611 716 865</a>
+            <a class="btn btn-secondary" href="https://wa.me/34611716865" rel="noopener">WhatsApp demo request</a>
           </div>
         </div>
       </div>
@@ -639,8 +1364,8 @@
   <footer class="site-footer">
     <div class="container">
       <div class="footer-line">
-        <span>Market Wow Radar</span>
-        <span>Activo digital funcional y transferible</span>
+        <span>Checkout Shield + Merchant Sentinel</span>
+        <span>Independent Shopify operations platforms with 24/7 worker agents</span>
       </div>
     </div>
   </footer>

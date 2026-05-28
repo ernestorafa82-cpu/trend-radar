@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Merchant Sentinel Mockup</title>
+  <style>
+    :root {
+      --background: #eef3f4;
+      --background-soft: rgba(255, 255, 255, 0.82);
+      --foreground: #0f1720;
+      --muted: #5e6a75;
+      --accent: #0f766e;
+      --accent-2: #c2410c;
+      --line: rgba(15, 23, 32, 0.08);
+      --panel: rgba(255, 255, 255, 0.9);
+      --shadow: 0 30px 80px rgba(15, 23, 42, 0.10);
+      --radius: 28px;
+      --radius-sm: 18px;
+      --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      --font-sans: "IBM Plex Sans", "Avenir Next", "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--foreground);
+      font-family: var(--font-sans);
+      background:
+        radial-gradient(circle at top left, rgba(15, 118, 110, 0.08), transparent 32%),
+        radial-gradient(circle at 85% 15%, rgba(194, 65, 12, 0.08), transparent 28%),
+        linear-gradient(180deg, #f8fbfb 0%, #eef3f4 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(90deg, rgba(15, 23, 32, 0.025) 0, rgba(15, 23, 32, 0.025) 1px, transparent 1px, transparent 24px),
+        repeating-linear-gradient(0deg, rgba(15, 23, 32, 0.02) 0, rgba(15, 23, 32, 0.02) 1px, transparent 1px, transparent 24px);
+      opacity: 0.6;
+    }
+
+    .page {
+      width: min(1600px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 16px 0 24px;
+      display: grid;
+      gap: 20px;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .sidebar, .topbar, .panel {
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 16px;
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .eyebrow {
+      color: var(--muted);
+      font-size: 0.68rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .title {
+      font-family: var(--font-display);
+      font-size: 1.95rem;
+      line-height: 0.96;
+      letter-spacing: -0.03em;
+      margin: 0;
+      color: #0f1720;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      color: #52606d;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(148, 163, 184, 0.24);
+    }
+
+    .mini {
+      background: white;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 16px;
+      padding: 10px;
+    }
+    .mini .label {
+      color: #7a8694;
+      font-size: 0.64rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .mini .value {
+      margin-top: 4px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #0f1720;
+    }
+
+    .operator {
+      border-radius: 18px;
+      background: #0f172a;
+      color: #fff;
+      padding: 14px;
+    }
+    .operator .label {
+      color: #a5f3fc;
+      font-size: 0.66rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
+    .operator .name {
+      margin-top: 8px;
+      font-weight: 700;
+      font-size: 0.98rem;
+    }
+    .operator .meta {
+      margin-top: 4px;
+      color: #94a3b8;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .views, .workspaces {
+      padding: 12px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.75);
+      background: rgba(255,255,255,0.88);
+    }
+    .section-label {
+      margin: 0 0 10px;
+      color: #8b949e;
+      font-size: 0.65rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
+    .view-btn, .ws-btn {
+      width: 100%;
+      border: 0;
+      border-radius: 18px;
+      padding: 12px 12px;
+      text-align: left;
+      background: transparent;
+      color: #52606d;
+      cursor: default;
+      margin-bottom: 6px;
+    }
+    .view-btn.active {
+      background: #0f172a;
+      color: #fff;
+      box-shadow: 0 10px 26px rgba(15,23,42,0.18);
+    }
+    .view-btn .label, .ws-btn .label {
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+    .view-btn .desc {
+      margin-top: 4px;
+      font-size: 0.72rem;
+      color: inherit;
+      opacity: 0.76;
+      line-height: 1.45;
+    }
+    .ws-btn {
+      background: #f8fafc;
+      border: 1px solid #d8e0e8;
+      margin-bottom: 8px;
+    }
+    .ws-btn.active {
+      background: #0f172a;
+      color: #fff;
+      border-color: #0f172a;
+    }
+    .ws-btn .plan {
+      margin-top: 3px;
+      font-size: 0.66rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.72;
+    }
+
+    .main {
+      display: grid;
+      gap: 18px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+    }
+    .topbar .left .eyebrow { margin: 0; }
+    .topbar .left .small {
+      margin-top: 4px;
+      color: #52606d;
+      font-size: 0.95rem;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.28);
+      background: #fff;
+      padding: 8px 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #0f1720;
+    }
+
+    .hero {
+      padding: 24px;
+      border-radius: 32px;
+      border: 1px solid rgba(255,255,255,0.72);
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.92), rgba(241,247,248,0.86)),
+        radial-gradient(circle at top right, rgba(15, 118, 110, 0.08), transparent 26%),
+        linear-gradient(145deg, rgba(255,255,255,0.92), rgba(241,247,248,0.86));
+      box-shadow: var(--shadow);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      margin: 10px 0 0;
+      max-width: 860px;
+      font-family: var(--font-display);
+      font-size: 3.7rem;
+      line-height: 0.96;
+      letter-spacing: -0.03em;
+      color: #0f1720;
+    }
+    .hero p.lead {
+      max-width: 860px;
+      margin: 16px 0 0;
+      color: #52606d;
+      font-size: 1.03rem;
+      line-height: 1.75;
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .hero-metric {
+      border-radius: 22px;
+      background: #ffffff;
+      border: 1px solid #dde5ec;
+      padding: 16px;
+    }
+    .hero-metric .label {
+      color: #7a8694;
+      font-size: 0.66rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+    .hero-metric .value {
+      margin-top: 10px;
+      font-weight: 700;
+      color: #0f1720;
+      font-size: 1rem;
+    }
+    .hero-metric .detail {
+      margin-top: 6px;
+      color: #64748b;
+      font-size: 0.78rem;
+      line-height: 1.55;
+    }
+
+    .hero-panel {
+      border-radius: 28px;
+      background: linear-gradient(180deg, #0f172a 0%, #102447 55%, #0f3d3a 100%);
+      color: #fff;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 28px 70px rgba(15,23,42,0.26);
+    }
+    .hero-panel .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #cbd5e1;
+      background: rgba(255,255,255,0.04);
+    }
+    .hero-panel .top span:last-child { color: #67e8f9; }
+    .hero-panel .body {
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .hero-stack {
+      display: grid;
+      gap: 12px;
+    }
+    .hero-strip {
+      border-radius: 20px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.09);
+      padding: 14px;
+    }
+    .hero-strip .label {
+      color: #a5f3fc;
+      font-size: 0.66rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+    .hero-strip .headline {
+      margin-top: 8px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .hero-strip .detail {
+      margin-top: 6px;
+      color: #cbd5e1;
+      font-size: 0.8rem;
+      line-height: 1.55;
+    }
+    .hero-strip.white {
+      background: #ffffff;
+      color: #0f1720;
+    }
+    .hero-strip.white .label { color: #0f766e; }
+    .hero-strip.white .detail { color: #64748b; }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+    .two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .card {
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(255,255,255,0.88);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+    .card .eyebrow {
+      color: #7c8793;
+    }
+    .card h2 {
+      margin: 10px 0 0;
+      font-family: var(--font-display);
+      font-size: 1.85rem;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      color: #0f1720;
+    }
+    .card p {
+      margin: 12px 0 0;
+      color: #52606d;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .tags {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
+      display: inline-flex;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.24);
+      background: #fff;
+      padding: 8px 10px;
+      color: #334155;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+    .tag.blue { background: #eef2ff; color: #3730a3; border-color: #c7d2fe; }
+    .tag.green { background: #ecfdf5; color: #166534; border-color: #bbf7d0; }
+    .tag.amber { background: #fffbeb; color: #92400e; border-color: #fde68a; }
+    .tag.red { background: #fef2f2; color: #991b1b; border-color: #fecaca; }
+
+    .store-list {
+      display: grid;
+      gap: 12px;
+    }
+    .store-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: start;
+      background: #fff;
+      border: 1px solid #dde5ec;
+      border-radius: 18px;
+      padding: 14px;
+    }
+    .store-row .name {
+      font-weight: 700;
+      color: #0f1720;
+      font-size: 1rem;
+    }
+    .store-row .desc {
+      margin-top: 5px;
+      color: #64748b;
+      font-size: 0.84rem;
+      line-height: 1.55;
+    }
+    .tone {
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 800;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+    .tone.ready { color: #166534; background: #ecfdf5; border-color: #bbf7d0; }
+    .tone.review { color: #92400e; background: #fffbeb; border-color: #fde68a; }
+    .tone.blocked { color: #991b1b; background: #fef2f2; border-color: #fecaca; }
+    .tone.brand { color: #3730a3; background: #eef2ff; border-color: #c7d2fe; }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+    }
+    .dot {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      color: #3730a3;
+      background: #eef2ff;
+      font-weight: 800;
+      font-size: 0.8rem;
+    }
+    .step strong {
+      display: block;
+      color: #0f1720;
+      font-size: 0.98rem;
+    }
+    .step span {
+      display: block;
+      margin-top: 4px;
+      color: #64748b;
+      font-size: 0.84rem;
+      line-height: 1.55;
+    }
+
+    .incident-list {
+      display: grid;
+      gap: 10px;
+    }
+    .incident-item {
+      border-radius: 18px;
+      border: 1px solid #dde5ec;
+      background: #fff;
+      padding: 14px;
+      display: grid;
+      gap: 8px;
+    }
+    .incident-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+    }
+    .incident-item .title {
+      font-family: var(--font-sans);
+      font-size: 0.98rem;
+      line-height: 1.35;
+      letter-spacing: 0;
+      margin: 0;
+      color: #0f1720;
+    }
+    .incident-item .sub {
+      color: #64748b;
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+
+    .advisor-grid {
+      display: grid;
+      grid-template-columns: 0.88fr 1.12fr;
+      gap: 16px;
+    }
+    .memory-group {
+      border-radius: 18px;
+      border: 1px solid #dde5ec;
+      background: #fff;
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+    .memory-group .head {
+      color: #0f1720;
+      font-weight: 700;
+      font-size: 0.94rem;
+    }
+    .memory-group .desc {
+      color: #64748b;
+      font-size: 0.82rem;
+      line-height: 1.55;
+    }
+    .memory-item {
+      border-radius: 14px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      padding: 10px 12px;
+    }
+    .memory-item .k {
+      color: #7c8793;
+      font-size: 0.66rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .memory-item .v {
+      margin-top: 4px;
+      color: #0f1720;
+      font-weight: 700;
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    .chat {
+      border-radius: 18px;
+      border: 1px solid #dde5ec;
+      background: #fff;
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+    .bubble {
+      border-radius: 16px;
+      padding: 12px 14px;
+      line-height: 1.6;
+      font-size: 0.9rem;
+    }
+    .bubble.user { background: #0f172a; color: #fff; margin-left: 12%; }
+    .bubble.assistant { background: #f8fafc; color: #0f1720; margin-right: 12%; border: 1px solid #e2e8f0; }
+    .assistant-headline {
+      margin: 0 0 4px;
+      color: #0f1720;
+      font-weight: 800;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: #7c8793;
+      font-size: 0.82rem;
+      padding: 0 4px;
+    }
+
+    .page [data-view] { display: none; }
+    body[data-view="command"] .page [data-view="command"],
+    body[data-view="stores"] .page [data-view="stores"],
+    body[data-view="incidents"] .page [data-view="incidents"],
+    body[data-view="advisor"] .page [data-view="advisor"] { display: grid; }
+
+    @media (max-width: 1180px) {
+      .shell { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .hero-grid, .advisor-grid, .two, .three { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 3rem; }
+    }
+  </style>
+</head>
+<body data-view="command">
+  <div class="page">
+    <div class="shell">
+      <aside class="sidebar">
+        <section>
+          <p class="eyebrow">Merchant Sentinel</p>
+          <h1 class="title">Agency Ops</h1>
+          <p class="subtitle">Revenue protection built like a control room, not a spreadsheet.</p>
+          <div class="stats">
+            <div class="mini"><div class="label">Stores</div><div class="value">4</div></div>
+            <div class="mini"><div class="label">Incidents</div><div class="value">7</div></div>
+            <div class="mini"><div class="label">Ready</div><div class="value">3</div></div>
+          </div>
+          <div class="operator" style="margin-top: 12px;">
+            <div class="label">Operator</div>
+            <div class="name">Ensya</div>
+            <div class="meta">7 incident items in play</div>
+          </div>
+        </section>
+
+        <section class="views">
+          <p class="section-label">Views</p>
+          <button class="view-btn active"><div class="label">Command</div><div class="desc">Priority, posture, and what moves next.</div></button>
+          <button class="view-btn"><div class="label">Stores</div><div class="desc">Merchant readiness, connectors, and setup detail.</div></button>
+          <button class="view-btn"><div class="label">Incidents</div><div class="desc">Current risk queue and operator timeline.</div></button>
+          <button class="view-btn"><div class="label">Alerts</div><div class="desc">Routing, destinations, and incident handoff.</div></button>
+          <button class="view-btn"><div class="label">Signals</div><div class="desc">Incoming evidence and test intake.</div></button>
+          <button class="view-btn"><div class="label">Advisor</div><div class="desc">AI brief, drafts, and memory control.</div></button>
+          <button class="view-btn"><div class="label">Settings</div><div class="desc">Plan, billing, members, and limits.</div></button>
+          <button class="view-btn"><div class="label">Admin</div><div class="desc">Raw diagnostics and internal posture.</div></button>
+        </section>
+
+        <section class="workspaces">
+          <div class="section-label">Workspaces</div>
+          <button class="ws-btn active"><div class="label">Agency Ops</div><div class="plan">Pilot Premium</div></button>
+          <button class="ws-btn"><div class="label">Northwind Studio</div><div class="plan">Ops Monitor</div></button>
+          <button class="ws-btn"><div class="label">Aster Labs</div><div class="plan">Pilot Premium</div></button>
+        </section>
+      </aside>
+
+      <main class="main">
+        <section class="topbar">
+          <div class="left">
+            <p class="eyebrow">Agency control plane</p>
+            <div class="small">Signed in as ensya@merchant-sentinel.com</div>
+          </div>
+          <div class="pill">Log out</div>
+        </section>
+
+        <section class="hero">
+          <div class="hero-grid">
+            <div>
+              <p class="eyebrow">Situation room</p>
+              <h1>Store Nova needs attention first</h1>
+              <p class="lead">High severity on Store Nova. Payment method mix anomaly. Confidence high. Estimated exposure is EUR 12,400. The merchant signal is still close enough to the baseline to act fast, but the workspace should not be treated as clean until the incident is resolved.</p>
+              <div class="hero-metrics">
+                <div class="hero-metric"><div class="label">Workspace</div><div class="value">Agency Ops</div><div class="detail">One workspace, multiple stores, one operating picture.</div></div>
+                <div class="hero-metric"><div class="label">Plan</div><div class="value">Pilot Premium</div><div class="detail">More stores, more routing, fuller delivery motion.</div></div>
+                <div class="hero-metric"><div class="label">Exposure</div><div class="value">EUR 12.4k</div><div class="detail">Estimated revenue at risk in the active queue.</div></div>
+              </div>
+            </div>
+            <div class="hero-panel">
+              <div class="top"><span>Merchant Sentinel</span><span>Watching 24/7</span></div>
+              <div class="body">
+                <div class="hero-strip">
+                  <div class="label">Portfolio health</div>
+                  <div class="headline">Live store vigilance</div>
+                  <div class="detail">A portfolio-wide view that turns raw signals into operational priority and clears the noise before it reaches the merchant.</div>
+                </div>
+                <div class="hero-strip white">
+                  <div class="label">Incident operations</div>
+                  <div class="headline">Prioritize the right problem</div>
+                  <div class="detail">Signals, incidents, and evidence are lined up so the agency sees what needs attention first.</div>
+                </div>
+                <div class="hero-strip">
+                  <div class="label">Worker agent</div>
+                  <div class="headline">Inside the platform</div>
+                  <div class="detail">The worker tracks stores, prepares context, and routes next steps. Sensitive actions still need a human decision.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="grid two">
+          <div class="card">
+            <p class="eyebrow">Command</p>
+            <h2>Priority, posture, and what moves next.</h2>
+            <p>The command room gives the agency a quick operational read: merchant readiness, incident load, signal quality, and whether the workspace is ready to act or needs escalation first.</p>
+            <div class="tags">
+              <span class="tag green">Stores ready</span>
+              <span class="tag amber">Open incidents</span>
+              <span class="tag blue">Signal quality</span>
+              <span class="tag red">Disconnected</span>
+            </div>
+            <div class="grid two" style="margin-top: 16px;">
+              <div class="hero-metric"><div class="label">Stores ready</div><div class="value">3 / 4</div><div class="detail">One store is still collecting signal.</div></div>
+              <div class="hero-metric"><div class="label">Open incidents</div><div class="value">7</div><div class="detail">Three are already in the active queue.</div></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <p class="eyebrow">Operations</p>
+            <h2>Alert routes and signal intake.</h2>
+            <div class="timeline">
+              <div class="step"><div class="dot">1</div><div><strong>Watch live stores</strong><span>Track health, degradations, and the signals that indicate real operational risk.</span></div></div>
+              <div class="step"><div class="dot">2</div><div><strong>Detect incident patterns</strong><span>Turn repeated signals into incident operations and agency-friendly context instead of raw noise.</span></div></div>
+              <div class="step"><div class="dot">3</div><div><strong>Protect revenue</strong><span>Prioritize risk, revenue exposure, and reporting so the agency can answer what matters now.</span></div></div>
+            </div>
+            <div class="tags">
+              <span class="tag">Alert routes live</span>
+              <span class="tag">Hand-off ready</span>
+              <span class="tag">Evidence first</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="grid two" data-view="stores">
+          <div class="card">
+            <p class="eyebrow">Merchant list</p>
+            <h2>Stores ordered for scanning.</h2>
+            <p>This list is built to compare posture quickly: readiness first, merchant second, numbers last.</p>
+            <div class="store-list" style="margin-top: 16px;">
+              <div class="store-row">
+                <div><div class="name">Store Alpha</div><div class="desc">Healthy · monitored · connector stable. Readiness is green and the signal is flowing.</div></div>
+                <div class="tone ready">Ready</div>
+              </div>
+              <div class="store-row">
+                <div><div class="name">Store Nova</div><div class="desc">Payment risk · review · the checkout signal is not where it should be.</div></div>
+                <div class="tone review">Review</div>
+              </div>
+              <div class="store-row">
+                <div><div class="name">Store Atlas</div><div class="desc">Tracking drop · incident · evidence suggests the store is crossing the threshold.</div></div>
+                <div class="tone blocked">Incident</div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <p class="eyebrow">Connector posture</p>
+            <h2>Readiness, workers, and the setup detail.</h2>
+            <div class="hero-metric"><div class="label">Workspace status</div><div class="value">Ready to operate</div><div class="detail">The worker is gathering evidence, but the workspace still needs one merchant to settle.</div></div>
+            <div class="grid two" style="margin-top: 16px;">
+              <div class="hero-metric"><div class="label">Merchant count</div><div class="value">4</div><div class="detail">The portfolio is above the minimum operating line.</div></div>
+              <div class="hero-metric"><div class="label">Alert routes</div><div class="value">2</div><div class="detail">Two delivery paths are configured for the workspace.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="grid two" data-view="incidents">
+          <div class="card">
+            <p class="eyebrow">Current risk queue</p>
+            <h2>Incidents and operator timeline.</h2>
+            <div class="incident-list" style="margin-top: 16px;">
+              <div class="incident-item">
+                <div class="incident-top"><div class="title">Store Nova needs attention first</div><div class="tone blocked">High</div></div>
+                <div class="sub">Payment method mix anomaly. Estimated exposure EUR 12,400. Recommended next action: open the incident timeline and review the latest evidence.</div>
+              </div>
+              <div class="incident-item">
+                <div class="incident-top"><div class="title">Store Atlas tracking drop</div><div class="tone review">Medium</div></div>
+                <div class="sub">Checkout signal drift and lower confidence evidence. Keep the handoff as advisory until the signal stabilizes.</div>
+              </div>
+              <div class="incident-item">
+                <div class="incident-top"><div class="title">Store Alpha operational warning</div><div class="tone brand">Low</div></div>
+                <div class="sub">A warning, not a blocker. The queue should stay open until the evidence trail has been closed.</div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <p class="eyebrow">Incident detail</p>
+            <h2>Timeline, notes, and operator actions.</h2>
+            <div class="timeline">
+              <div class="step"><div class="dot">A</div><div><strong>Evidence observed</strong><span>Checkout completion signal dropped below the expected range and the worker flagged a measurable shift.</span></div></div>
+              <div class="step"><div class="dot">B</div><div><strong>Owner note</strong><span>Keep the resolution in the active queue until the merchant-facing story is aligned with the technical evidence.</span></div></div>
+              <div class="step"><div class="dot">C</div><div><strong>Closeout</strong><span>Do not call this green until the release side and the store side agree on the same state.</span></div></div>
+            </div>
+            <div class="tags"><span class="tag red">No false calm</span><span class="tag amber">Human decision</span><span class="tag blue">Evidence trail</span></div>
+          </div>
+        </section>
+
+        <section class="grid two" data-view="advisor">
+          <div class="card">
+            <p class="eyebrow">Advisor memory</p>
+            <h2>What the agent keeps inside the workspace.</h2>
+            <div class="advisor-grid" style="margin-top: 16px;">
+              <div class="memory-group">
+                <div class="head">Workspace facts</div>
+                <div class="desc">Stable context the advisor should keep aligned with the live workspace state.</div>
+                <div class="memory-item"><div class="k">workspace_plan</div><div class="v">Pilot Premium</div></div>
+                <div class="memory-item"><div class="k">billing_state</div><div class="v">Active and aligned</div></div>
+              </div>
+              <div class="memory-group">
+                <div class="head">Operational context</div>
+                <div class="desc">What the advisor should bias toward first inside the current workspace.</div>
+                <div class="memory-item"><div class="k">top_incident</div><div class="v">Store Nova payment risk</div></div>
+                <div class="memory-item"><div class="k">preferred_tone</div><div class="v">Calm, precise, operator-first</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <p class="eyebrow">Advisor brief</p>
+            <h2>AI brief, drafts, and memory control.</h2>
+            <div class="chat" style="margin-top: 16px;">
+              <div class="bubble user">What should I fix first?</div>
+              <div class="bubble assistant">
+                <div class="assistant-headline">Store Nova is the first move.</div>
+                Keep the operational picture tight: confirm the payment signal, review the evidence trail, and make sure the merchant-facing handoff does not overstate the state of the release.
+              </div>
+              <div class="bubble assistant">
+                <div class="assistant-headline">Recommended next action</div>
+                Open the incident, inspect the latest evidence, and keep the workspace in review until the technical and merchant versions of the story match.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="grid three" data-view="command">
+          <div class="hero-metric"><div class="label">Revenue at risk</div><div class="value">EUR 12.4k</div><div class="detail">One clear estimate instead of a vague dashboard number.</div></div>
+          <div class="hero-metric"><div class="label">Signal quality</div><div class="value">High</div><div class="detail">Raw events and normalized facts are still in a good operating ratio.</div></div>
+          <div class="hero-metric"><div class="label">Disconnected</div><div class="value">1 store</div><div class="detail">One merchant is not yet fully observable and should be reconnected.</div></div>
+        </section>
+      </main>
+    </div>
+    <div class="footer">
+      <span>Merchant Sentinel · Agency control plane</span>
+      <span>Live store vigilance, incident operations, revenue protection</span>
+    </div>
+  </div>
+</body>
+</html>

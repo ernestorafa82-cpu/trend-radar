@@ -1,7 +1,7 @@
-# HANDOFF — Trend-Radar / Market Wow Radar
+# HANDOFF — Content Trend Radar
 
 ## Qué es este activo
-Trend-Radar es un asset Python script-first que genera un brief diario multi-mercado con señales filtradas y priorizadas en formato Markdown y JSON.
+Content Trend Radar es un motor Python script-first que genera un brief diario con temas filtrados y priorizados para contenido en formato Markdown y JSON.
 
 ## Qué recibe el comprador
 - código fuente del proyecto
@@ -24,6 +24,8 @@ Trend-Radar es un asset Python script-first que genera un brief diario multi-mer
 ## Output del producto
 - `out/latest.md`: brief diario legible para humano
 - `out/latest.json`: salida estructurada para automatización o integración
+- `out/latest.skool.md`: post listo para comunidad
+- `out/latest.workbench.md`: hoja de trabajo para convertir temas en piezas
 - `out/radar_YYYY-MM-DD.md|json`: histórico diario
 - `out/cron.log`: log operativo
 
@@ -34,7 +36,7 @@ Trend-Radar es un asset Python script-first que genera un brief diario multi-mer
 
 ## Qué está ya resuelto
 - generación diaria demoable
-- formato buyer-facing básico del reporte
+- formato de reporte orientado a ideas de contenido
 - instalación mínima reproducible
 - wrapper de demo reproducible
 - sanity check básico
@@ -42,7 +44,7 @@ Trend-Radar es un asset Python script-first que genera un brief diario multi-mer
 
 ## Límites actuales del activo
 - depende de cuota/billing de OpenAI
-- es un asset script-first, no una app SaaS multiusuario
+- es un motor script-first, no una app SaaS multiusuario
 - no incluye panel web, auth ni sistema de gestión de usuarios
 - la calidad depende de fuentes externas y del modelo configurado
 - requiere configuración manual inicial de `.env`
@@ -60,5 +62,5 @@ Trend-Radar es un asset Python script-first que genera un brief diario multi-mer
 - criterio editorial/comercial de uso del radar, si se vende como activo con posicionamiento
 
 ## Estado actual
-Activo funcional, demoable y transferible a nivel técnico básico.
-No está empaquetado como producto SaaS completo; está empaquetado como asset operativo vendible.
+Motor funcional, demoable y transferible a nivel técnico básico.
+No está empaquetado como producto SaaS completo; está pensado para uso operativo interno o distribución del Top 10 ya generado.

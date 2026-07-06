@@ -1,7 +1,7 @@
-# OPERATIONS — Trend-Radar / Market Wow Radar
+# OPERATIONS — Content Trend Radar
 
 ## Objetivo operativo
-Ejecutar el radar diario, verificar que genera salida válida y poder diagnosticar fallos básicos sin depender del autor original.
+Ejecutar el radar diario, verificar que genera salida válida y detectar temas con potencial de contenido sin depender del autor original.
 
 ## Preparación inicial
 1. ejecutar `./setup.sh`
@@ -11,6 +11,9 @@ Ejecutar el radar diario, verificar que genera salida válida y poder diagnostic
    - `RADAR_MODEL`
    - `RADAR_TOP_N`
    - `RADAR_ALLOW_POLITICS`
+   - `RADAR_CREATOR_FOCUS`
+   - `RADAR_AUDIENCE`
+   - `RADAR_PLATFORM`
 
 ## Ejecución manual
 ```bash
@@ -29,6 +32,8 @@ Ejecutar el radar diario, verificar que genera salida válida y poder diagnostic
 ## Outputs esperados
 - `out/latest.md`
 - `out/latest.json`
+- `out/latest.skool.md`
+- `out/latest.workbench.md`
 - histórico en `out/radar_YYYY-MM-DD.md` y `out/radar_YYYY-MM-DD.json`
 - log operativo en `out/cron.log`
 

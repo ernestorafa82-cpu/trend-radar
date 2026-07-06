@@ -13,6 +13,9 @@ os.makedirs(DATA_DIR, exist_ok=True)
 
 MODEL = os.getenv("RADAR_MODEL", "gpt-5")
 TOP_N = int(os.getenv("RADAR_TOP_N", "10"))
+CREATOR_FOCUS = os.getenv("RADAR_CREATOR_FOCUS", "faceless ai tools, creator workflows, startups, automation")
+AUDIENCE = os.getenv("RADAR_AUDIENCE", "creadores faceless y comunidades que quieren ideas prácticas")
+PRIMARY_PLATFORM = os.getenv("RADAR_PLATFORM", "Skool")
 
 SOURCES = [
     # Startups / builders
@@ -22,13 +25,12 @@ SOURCES = [
     # Tech + AI news (RSS)
     {"name": "techcrunch", "kind": "rss", "url": "https://techcrunch.com/feed/"},
     {"name": "theverge", "kind": "rss", "url": "https://www.theverge.com/rss/index.xml"},
-
-    # Business signals (RSS)    {"name": "ft_tech", "kind": "rss", "url": "https://www.ft.com/technology?format=rss"},
+    {"name": "ft_tech", "kind": "rss", "url": "https://www.ft.com/technology?format=rss"},
 
     # Google News RSS by topic (broad, multi-market)
     {"name": "gn_tech", "kind": "rss", "url": "https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRFZxYUdjU0FtVnVHZ0pWVXlnQVAB?hl=en&gl=US&ceid=US:en"},
     {"name": "gn_health", "kind": "rss", "url": "https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGx1YlY4U0FtVnVHZ0pWVXlnQVAB?hl=en&gl=US&ceid=US:en"},
-    {"name": "gn_business", "kind": "rss", "url": "https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGx1YlY4U0FtVnVHZ0pWVXlnQVAB?hl=en&gl=US&ceid=US:en"},
+    {"name": "gn_business", "kind": "rss", "url": "https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRFNkNk5Xc0tFeEtFSm5DVU1VY0lnQVAB?hl=en&gl=US&ceid=US:en"},
     {"name": "gn_finance", "kind": "rss", "url": "https://news.google.com/rss/search?q=fintech+OR+payments+OR+banking&hl=en&gl=US&ceid=US:en"},
     {"name": "gn_cyber", "kind": "rss", "url": "https://news.google.com/rss/search?q=cybersecurity+OR+ransomware+OR+breach&hl=en&gl=US&ceid=US:en"},
 
@@ -41,6 +43,13 @@ SOURCES = [
 def now_utc_date():
     # Backwards-compatible name; returns local day key in Europe/Madrid
     return datetime.now(ZoneInfo("Europe/Madrid")).strftime("%Y-%m-%d")
+
+def slugify(text: str) -> str:
+    clean = re.sub(r"[^a-z0-9]+", "-", (text or "").lower()).strip("-")
+    return clean or "topic"
+
+def audience_hint() -> str:
+    return f"Foco del creador: {CREATOR_FOCUS}. Audiencia: {AUDIENCE}. Plataforma principal: {PRIMARY_PLATFORM}."
 
 def sha(s: str) -> str:
     return hashlib.sha256(s.encode("utf-8")).hexdigest()[:16]
@@ -95,14 +104,25 @@ def dedupe(items):
 
 
 def signal_gate(items):
-    """Lightweight quality filter to reduce noise before LLM."""
+    """Keep topics that are likely to become useful creator-facing content."""
     allow_politics = os.getenv("RADAR_ALLOW_POLITICS", "0") == "1"
     good_kw = [
-        "ai","agent","agents","model","llm","robot","robotics","biotech","drug","clinical","genomics",
-        "fintech","payments","processor","banking","fraud","ransomware","breach","vulnerability","exploit",
-        "regulation","law","compliance","open source","github","release","benchmark","swe-bench","chip","gpu"
+        "ai", "agent", "agents", "model", "llm", "robot", "robotics", "biotech", "drug", "clinical", "genomics",
+        "fintech", "payments", "processor", "banking", "fraud", "ransomware", "breach", "vulnerability", "exploit",
+        "regulation", "law", "compliance", "open source", "github", "release", "benchmark", "swe-bench", "chip", "gpu",
+        "launch", "raises", "raise", "funding", "series", "valuation", "startup", "creator", "video", "youtube",
+        "tiktok", "shorts", "viral", "trend", "study", "report", "breakthrough", "tool", "app", "automation"
     ]
     bad_kw = ["celebrity","gossip","sports","match","oscars","grammys"]
+    creator_focus_kw = [k.strip().lower() for k in CREATOR_FOCUS.split(",") if k.strip()]
+    hook_kw = [
+        "new", "first", "launch", "breakthrough", "secret", "warning", "risk", "ban", "replace", "beats",
+        "faster", "cheaper", "viral", "trend", "explains", "future", "funding", "billion", "tool", "agent"
+    ]
+    explainer_kw = [
+        "ai", "agent", "tool", "app", "startup", "funding", "robot", "drug", "chip", "gpu", "study", "report",
+        "regulation", "breach", "open source", "launch", "automation", "benchmark"
+    ]
 
     out = []
     for it in items:
@@ -116,11 +136,13 @@ def signal_gate(items):
             # keep only if it also contains strong innovation keywords
             if not any(k in tl for k in ["regulation","compliance","energy","cyber","ai","semiconductor","chip"]):
                 continue
-        # score keywords
-        score = sum(1 for k in good_kw if k in tl)
-        if score == 0:
+        base_score = sum(1 for k in good_kw if k in tl)
+        hook_score = sum(1 for k in hook_kw if k in tl)
+        explainer_score = sum(1 for k in explainer_kw if k in tl)
+        focus_score = sum(1 for k in creator_focus_kw if k in tl)
+        if base_score == 0:
             continue
-        it["_gate_score"] = score
+        it["_gate_score"] = (base_score * 2) + (hook_score * 3) + (explainer_score * 2) + (focus_score * 4)
         out.append(it)
 
     out.sort(key=lambda x: x.get("_gate_score",0), reverse=True)
@@ -263,23 +285,28 @@ def score_with_gpt(raw_items):
 
     prompt = {
         "run_date": now_utc_date(),
+        "creator_focus": CREATOR_FOCUS,
+        "audience": AUDIENCE,
+        "platform": PRIMARY_PLATFORM,
         "items": [{"id": i["id"], "title": i["title"], "item_url": i["url"], "source": i["source"], "confirmed_by": i.get("_confirmed_by", [])} for i in raw_items if i.get("url")][:60]
     }
 
     system = (
-        "Eres un analista de tendencias multi-mercado (global). "
+        "Eres un analista de tendencias para creadores faceless y contenido corto. "
         "Devuelve SOLO JSON válido siguiendo el contrato exacto. "
         "REGLA CRITICA: NO inventes hechos. NO reescribas títulos. "
         "Debes seleccionar items SOLO desde INPUT usando su campo 'id'. "
         "NO inventes: si un item no existe en INPUT, no lo uses. "
         "Si no puedes inferir algo sin inventar, baja score y pon notes='uncertain'. "
-        "Objetivo: separar señal de ruido y recomendar acción. "
+        "Objetivo: separar señal de ruido y recomendar acción para contenido. "
         "Idioma de salida: escribe en español neutro todos los campos generados por ti. "
         "Mantén el campo 'title' exactamente como venga en INPUT, sin traducirlo ni reescribirlo. "
-        "Escribe en español: 'what_it_is', 'why_it_matters', 'tags' y 'notes'. "
+        "Escribe en español: 'what_it_is', 'why_it_matters', 'content_why_now', 'content_angle', 'hook', 'tags' y 'notes'. "
         "Mantén las enums y valores del contrato exactamente como están. "
         "Usa español correcto con tildes, eñes y caracteres Unicode reales. "
-        "No sustituyas caracteres acentuados por ASCII ni por transliteraciones defectuosas como mFs, gesti3n o autonomDa."
+        "No sustituyas caracteres acentuados por ASCII ni por transliteraciones defectuosas como mFs, gesti3n o autonomDa. "
+        "Prioriza historias que puedan convertirse en reels, shorts, carruseles o posts claros, curiosos y fáciles de explicar. "
+        "Alinea la selección con el foco del creador, la audiencia y la plataforma indicados en INPUT."
     )
 
     contract = """{
@@ -289,14 +316,23 @@ def score_with_gpt(raw_items):
       "id":"",
       "title":"",
       "item_url":"",
-      "category":"AI|Health|Fintech|Cyber|Regulation|Energy|Retail|Ops|Other",
+      "category":"AI|Tools|Startups|Business|Cyber|Science|Regulation|ConsumerTech|Other",
       "source":{"name":"","url":""},
       "what_it_is":"",
       "why_it_matters":"",
-      "signals":{"momentum":0,"market_urgency":0,"moat":0,"monetization":0,"strategic_fit":0},
+      "content_why_now":"",
+      "content_angle":"",
+      "best_format":"REEL|SHORT|CAROUSEL|THREAD|POST",
+      "hook":"",
+      "hook_variants":["",""],
+      "talking_points":["","",""],
+      "cta":"",
+      "search_intent":"DISCOVER|EXPLAIN|OPINION|ALERT|CURATION",
+      "audience_level":"GENERAL|SEMI_TECH|TECH",
+      "signals":{"hook_strength":0,"novelty":0,"clarity":0,"shareability":0,"creator_fit":0},
       "score_total":0,
       "hype_risk":"LOW|MED|HIGH",
-      "recommended_action":"IGNORE|WATCH|EXPLORE|ACT",
+      "recommended_action":"SKIP|WATCH|DRAFT|POST",
       "tags":["",""],
       "notes":""
     }
@@ -354,6 +390,22 @@ def main():
     scored["items"] = sorted(scored.get("items", []), key=lambda x: x.get("score_total", 0), reverse=True)
     scored["items"] = dedupe_scored_items(scored.get("items", []))
     scored["items"] = scored.get("items", [])[:TOP_N]
+    for it in scored["items"]:
+        it.setdefault("content_why_now", "")
+        it.setdefault("content_angle", "")
+        it.setdefault("best_format", "POST")
+        it.setdefault("hook", "")
+        it.setdefault("hook_variants", [])
+        it.setdefault("talking_points", [])
+        it.setdefault("cta", "")
+        it.setdefault("search_intent", "DISCOVER")
+        it.setdefault("audience_level", "GENERAL")
+        it.setdefault("signals", {})
+        it["signals"].setdefault("hook_strength", 0)
+        it["signals"].setdefault("novelty", 0)
+        it["signals"].setdefault("clarity", 0)
+        it["signals"].setdefault("shareability", 0)
+        it["signals"].setdefault("creator_fit", 0)
     for idx, it in enumerate(scored["items"], 1):
         it["rank"] = idx
 
@@ -376,7 +428,8 @@ def main():
 
     out_md = os.path.join(OUT_DIR, f"radar_{date}.md")
     with open(out_md, "w", encoding="utf-8") as f:
-        f.write(f"# Trend Radar {date}\n\n")
+        f.write(f"# Content Trend Radar {date}\n\n")
+        f.write(f"> {audience_hint()}\n\n")
         for idx, it in enumerate(scored["items"], 1):
             f.write(f"## {idx}. {it['title']}\n")
             f.write(f"- Score: **{it['score_total']}** | Action: **{it['recommended_action']}** | Hype: **{it['hype_risk']}**\n")
@@ -385,11 +438,38 @@ def main():
             f.write(f"- Link: {it.get('item_url','')}\n")
             what = it.get("what_it_is", "")
             why = it.get("why_it_matters", "")
+            why_now = it.get("content_why_now", "")
+            angle = it.get("content_angle", "")
+            hook = it.get("hook", "")
             if not why:
              it["notes"] = (it.get("notes","") + " | missing_field=why_it_matters").strip(" |")
 
             f.write(f"- What: {what}\n")
             f.write(f"- Why: {why}\n")
+            f.write(f"- Why now for content: {why_now}\n")
+            f.write(f"- Suggested angle: {angle}\n")
+            f.write(f"- Best format: {it.get('best_format', 'POST')}\n")
+            f.write(f"- Search intent: {it.get('search_intent', 'DISCOVER')}\n")
+            f.write(f"- Audience level: {it.get('audience_level', 'GENERAL')}\n")
+            f.write(f"- Hook: {hook}\n")
+            hook_variants = [x for x in it.get("hook_variants", []) if x]
+            if hook_variants:
+                f.write("- Hook variants: " + " | ".join(hook_variants) + "\n")
+            talking_points = [x for x in it.get("talking_points", []) if x]
+            if talking_points:
+                f.write("- Talking points: " + " | ".join(talking_points) + "\n")
+            cta = (it.get("cta") or "").strip()
+            if cta:
+                f.write(f"- CTA: {cta}\n")
+            s = it.get("signals", {})
+            f.write(
+                "- Content signals: "
+                f"hook={s.get('hook_strength', 0)} | "
+                f"novelty={s.get('novelty', 0)} | "
+                f"clarity={s.get('clarity', 0)} | "
+                f"shareability={s.get('shareability', 0)} | "
+                f"creator_fit={s.get('creator_fit', 0)}\n"
+            )
             f.write(f"- Tags: {', '.join(it.get('tags', []))}\n")
 
             notes = (it.get("notes") or "").strip()
@@ -399,6 +479,57 @@ def main():
 
     print(f"OK: {out_json}")
     print(f"OK: {out_md}")
+
+    def build_skool_post(items_sorted, top_cat):
+        lines = []
+        lines.append(f"# Top 10 de ideas para hoy ({date})")
+        lines.append("")
+        lines.append(f"Hoy el radar viene cargado de **{top_cat}**.")
+        lines.append(f"Foco: **{CREATOR_FOCUS}**.")
+        lines.append("")
+        lines.append("He filtrado las señales pensando en temas que se puedan convertir rápido en contenido.")
+        lines.append("")
+        for idx, it in enumerate(items_sorted, 1):
+            action = it.get("recommended_action", "WATCH")
+            format_name = it.get("best_format", "POST")
+            hook = (it.get("hook") or "").strip()
+            angle = (it.get("content_angle") or "").strip()
+            lines.append(f"## {idx}. {it.get('title','').strip()}")
+            lines.append(f"- Acción: **{action}**")
+            lines.append(f"- Formato sugerido: **{format_name}**")
+            if hook:
+                lines.append(f"- Hook: {hook}")
+            if angle:
+                lines.append(f"- Ángulo: {angle}")
+            lines.append(f"- Link: {it.get('item_url','').strip()}")
+            lines.append("")
+        lines.append("Si queréis, de uno de estos temas saco después hooks, guion o carrusel.")
+        return "\n".join(lines) + "\n"
+
+    def build_creator_workbench(items_sorted):
+        lines = []
+        lines.append(f"# Creator Workbench {date}")
+        lines.append("")
+        lines.append(f"- Plataforma principal: {PRIMARY_PLATFORM}")
+        lines.append(f"- Audiencia: {AUDIENCE}")
+        lines.append(f"- Foco: {CREATOR_FOCUS}")
+        lines.append("")
+        for idx, it in enumerate(items_sorted, 1):
+            lines.append(f"## {idx}. {it.get('title','').strip()}")
+            lines.append(f"- Acción: {it.get('recommended_action', 'WATCH')}")
+            lines.append(f"- Formato: {it.get('best_format', 'POST')}")
+            lines.append(f"- Search intent: {it.get('search_intent', 'DISCOVER')}")
+            lines.append(f"- Hook principal: {it.get('hook','').strip()}")
+            for n, hook_variant in enumerate([x for x in it.get('hook_variants', []) if x], 1):
+                lines.append(f"- Hook alternativo {n}: {hook_variant}")
+            for n, point in enumerate([x for x in it.get('talking_points', []) if x], 1):
+                lines.append(f"- Talking point {n}: {point}")
+            cta = (it.get("cta") or "").strip()
+            if cta:
+                lines.append(f"- CTA: {cta}")
+            lines.append(f"- Prompt rápido: Convierte este tema en un {it.get('best_format', 'POST').lower()} para {AUDIENCE} usando este hook: {it.get('hook','').strip()}")
+            lines.append("")
+        return "\n".join(lines) + "\n"
 
     # --- latest pointers (copy) ---
     latest_json = os.path.join(OUT_DIR, "latest.json")
@@ -416,6 +547,8 @@ def main():
         action = it.get("recommended_action", "WATCH")
         title = (it.get("title") or "").strip()
         src = ((it.get("source") or {}).get("name") or "").strip()
+        hook = (it.get("hook") or "").strip()
+        best_format = (it.get("best_format") or "POST").strip()
         notes = (it.get("notes") or "")
         cb = ""
         if "confirmed_by=" in notes:
@@ -432,17 +565,20 @@ def main():
         if len(title) > 160:
             title = title[:157] + "…"
         url = (it.get("item_url") or "").strip()
+        hook_line = f"\n  hook: {hook}" if hook else ""
+        format_line = f"\n  format: {best_format}" if best_format else ""
         suffix = f"\n  {url}" if url else ""
-        return f"- [{action}] {title} ({src}){cb}{suffix}"
+        return f"- [{action}] {title} ({src}){cb}{hook_line}{format_line}{suffix}"
 
 
     items = scored.get("items", [])
     items_sorted = sorted(items, key=lambda x: x.get("score_total", 0), reverse=True)
     cats = [x.get("category", "Other") for x in items_sorted]
     top_cat = max(set(cats), key=cats.count) if cats else "Other"
-    act = [x for x in items_sorted if x.get("recommended_action") == "ACT"][:3]
+    post = [x for x in items_sorted if x.get("recommended_action") == "POST"][:3]
+    draft = [x for x in items_sorted if x.get("recommended_action") == "DRAFT"][:3]
     watch = [x for x in items_sorted if x.get("recommended_action") == "WATCH"][:2]
-    explore = [x for x in items_sorted if x.get("recommended_action") == "EXPLORE"][:1]
+    skip = [x for x in items_sorted if x.get("recommended_action") == "SKIP"][:1]
 
     lines = []
     bad = []
@@ -450,37 +586,41 @@ def main():
         if (not st.get("ok")) or (st.get("count", 0) == 0):
             bad.append(f"{name}={'err' if not st.get('ok') else '0'}")
     health_txt = "OK" if not bad else "WARN (" + ", ".join(sorted(bad)) + ")"
-    lines.append(f"Market Wow Radar — {date} — Health: {health_txt}")
+    lines.append(f"Content Trend Radar — {date} — Health: {health_txt}")
     lines.append("")
     lines.append(f"Tema del día: {top_cat}")
     lines.append("")
-    lines.append("TOP (ACT)")
-    lines += [_tg_line(x) for x in act] if act else ["- (sin ACT hoy)"]
+    lines.append("TOP (POST)")
+    lines += [_tg_line(x) for x in post] if post else ["- (sin POST hoy)"]
+    lines.append("")
+    lines.append("DRAFT")
+    lines += [_tg_line(x) for x in draft] if draft else ["- (sin DRAFT hoy)"]
     lines.append("")
     lines.append("WATCH")
     lines += [_tg_line(x) for x in watch] if watch else ["- (sin WATCH hoy)"]
     lines.append("")
-    lines.append("EXPLORE")
-    lines += [_tg_line(x) for x in explore] if explore else ["- (sin EXPLORE hoy)"]
+    lines.append("SKIP")
+    lines += [_tg_line(x) for x in skip] if skip else ["- (sin SKIP hoy)"]
     lines.append("")
 
     # --- Killer insight (heuristic, no extra LLM) ---
     cats = [x.get("category", "Other") for x in items_sorted]
     top_cat = max(set(cats), key=cats.count) if cats else "Other"
 
-    lines.append(f"Tema del día: {top_cat}")
-    lines.append("")
-
-    act_count = sum(1 for x in items_sorted if x.get("recommended_action") == "ACT")
+    post_count = sum(1 for x in items_sorted if x.get("recommended_action") == "POST")
+    draft_count = sum(1 for x in items_sorted if x.get("recommended_action") == "DRAFT")
     watch_count = sum(1 for x in items_sorted if x.get("recommended_action") == "WATCH")
 
-    implication = f"Hoy domina {top_cat}: {act_count} ACT y {watch_count} WATCH sugieren señal accionable (no solo ruido)."
+    implication = (
+        f"Hoy domina {top_cat}: {post_count} POST, {draft_count} DRAFT y {watch_count} WATCH "
+        "sugieren temas con potencial real para contenido, no solo ruido informativo."
+    )
 
-    top_titles = [x.get("title","").strip() for x in act[:2] if x.get("title")]
+    top_titles = [x.get("title","").strip() for x in post[:2] if x.get("title")]
     if top_titles:
-        next_step = f"Haz 1 verificación rápida: abre y resume en 3 bullets: {top_titles[0]}."
+        next_step = f"Convierte primero este tema en un hook y un guion corto: {top_titles[0]}."
     else:
-        next_step = "Revisa el TOP 3 y decide si activar un experimento de 1h (POC) o solo seguimiento."
+        next_step = "Revisa el TOP 3 y elige uno para convertirlo en reel, carrusel o post antes de seguir buscando más ideas."
 
     # we’ll inject these below
 
@@ -492,9 +632,20 @@ def main():
     lines.append("JSON: out/latest.json")
     telegram_text = "\n".join(lines) + "\n"
 
+    skool_text = build_skool_post(items_sorted, top_cat)
+    workbench_text = build_creator_workbench(items_sorted)
+
     out_tg = os.path.join(OUT_DIR, f"radar_{date}.telegram.txt")
     with open(out_tg, "w", encoding="utf-8") as f:
         f.write(telegram_text)
+
+    out_skool = os.path.join(OUT_DIR, f"radar_{date}.skool.md")
+    with open(out_skool, "w", encoding="utf-8") as f:
+        f.write(skool_text)
+
+    out_workbench = os.path.join(OUT_DIR, f"radar_{date}.workbench.md")
+    with open(out_workbench, "w", encoding="utf-8") as f:
+        f.write(workbench_text)
 
     latest_tg = os.path.join(OUT_DIR, "latest.telegram.txt")
     try:
@@ -506,6 +657,15 @@ def main():
         with open(latest_tg, "w", encoding="utf-8") as f:
             f.write(telegram_text)
 
+    latest_skool = os.path.join(OUT_DIR, "latest.skool.md")
+    latest_workbench = os.path.join(OUT_DIR, "latest.workbench.md")
+
+    with open(out_skool, "r", encoding="utf-8") as src, open(latest_skool, "w", encoding="utf-8") as dst:
+        dst.write(src.read())
+
+    with open(out_workbench, "r", encoding="utf-8") as src, open(latest_workbench, "w", encoding="utf-8") as dst:
+        dst.write(src.read())
+
 
 if __name__ == "__main__":
     # Sanity check timezone day_key (Europe/Madrid)
@@ -515,4 +675,3 @@ if __name__ == "__main__":
     assert madrid == "2026-02-15", f"day_key tz regression: {madrid}"
 
     main()
-

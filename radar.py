@@ -481,15 +481,27 @@ def main():
     print(f"OK: {out_md}")
 
     def build_skool_post(items_sorted, top_cat):
+        public_items = [
+            it for it in items_sorted
+            if it.get("recommended_action") in {"POST", "DRAFT", "WATCH"}
+        ]
+
         lines = []
-        lines.append(f"# Top 10 de ideas para hoy ({date})")
+        lines.append(f"# Ideas de contenido para hoy ({date})")
         lines.append("")
         lines.append(f"Hoy el radar viene cargado de **{top_cat}**.")
         lines.append(f"Foco: **{CREATOR_FOCUS}**.")
         lines.append("")
         lines.append("He filtrado las señales pensando en temas que se puedan convertir rápido en contenido.")
         lines.append("")
-        for idx, it in enumerate(items_sorted, 1):
+
+        if not public_items:
+            lines.append("Hoy no hay señales suficientemente claras para convertir en contenido sin forzar el tema.")
+            lines.append("")
+            lines.append("Mejor vigilar el mercado y esperar una señal más fuerte.")
+            return "\n".join(lines) + "\n"
+
+        for idx, it in enumerate(public_items, 1):
             action = it.get("recommended_action", "WATCH")
             format_name = it.get("best_format", "POST")
             hook = (it.get("hook") or "").strip()
@@ -503,6 +515,7 @@ def main():
                 lines.append(f"- Ángulo: {angle}")
             lines.append(f"- Link: {it.get('item_url','').strip()}")
             lines.append("")
+
         lines.append("Si queréis, de uno de estos temas saco después hooks, guion o carrusel.")
         return "\n".join(lines) + "\n"
 
